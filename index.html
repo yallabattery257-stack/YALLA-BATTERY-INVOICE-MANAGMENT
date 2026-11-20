@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Yalla Battery CRM</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f6f7;
+    color:#123b40;
+}
+
+/* HEADER */
+.header{
+    background:#005f64;
+    color:white;
+    padding:18px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:55px;
+    height:55px;
+    background:white;
+    color:#00777a;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    font-weight:900;
+    position:relative;
+}
+
+.logo span{
+    color:#f9c400;
+    font-size:23px;
+}
+
+.brand h1{
+    margin:0;
+    font-size:24px;
+    letter-spacing:.5px;
+}
+
+.brand p{
+    margin:3px 0 0;
+    font-size:12px;
+    color:#f9c400;
+    font-weight:bold;
+}
+
+/* HEADER RIGHT */
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user-info{
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.20);
+    padding:8px 12px;
+    border-radius:8px;
+    text-align:right;
+}
+
+.user-name{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.user-role{
+    font-size:10px;
+    color:#f9c400;
+    margin-top:2px;
+}
+
+.logout-btn{
+    background:#f9c400;
+    color:#123b40;
+    border:0;
+    padding:10px 13px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.menu-btn{
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    color:white;
+    padding:10px 14px;
+    border-radius:8px;
+    font-size:22px;
+    cursor:pointer;
+}
+
+/* MAIN */
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:25px 18px 40px;
+}
+
+.welcome{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:22px;
+    border-left:6px solid #f9c400;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.welcome h2{
+    margin:0 0 6px;
+    color:#005f64;
+}
+
+.welcome p{
+    margin:0;
+    color:#647477;
+}
+
+/* STATS */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+    border-top:4px solid #00777a;
+}
+
+.stat .icon{
+    font-size:25px;
+}
+
+.stat h3{
+    margin:10px 0 3px;
+    font-size:25px;
+    color:#005f64;
+}
+
+.stat p{
+    margin:0;
+    color:#758487;
+    font-size:13px;
+}
+
+/* MENU */
+.section-title{
+    font-size:20px;
+    color:#005f64;
+    margin:25px 0 14px;
+}
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:17px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    box-shadow:0 4px 13px rgba(0,0,0,.07);
+    border:1px solid #e1e9ea;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 7px 18px rgba(0,0,0,.12);
+}
+
+.card-icon{
+    width:52px;
+    height:52px;
+    border-radius:12px;
+    background:#e8f5f5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    margin-bottom:14px;
+}
+
+.card h3{
+    margin:0 0 7px;
+    color:#005f64;
+}
+
+.card p{
+    margin:0;
+    color:#687779;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.card.primary{
+    border-top:5px solid #f9c400;
+}
+
+.card.primary .card-icon{
+    background:#fff7d6;
+}
+
+/* OWNER REPORTS */
+.card.reports{
+    border-top:5px solid #005f64;
+}
+
+.card.reports .card-icon{
+    background:#e5f4f4;
+}
+
+/* QUICK ACTION */
+.quick{
+    margin-top:25px;
+    background:#005f64;
+    color:white;
+    border-radius:15px;
+    padding:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.quick h3{
+    margin:0 0 5px;
+}
+
+.quick p{
+    margin:0;
+    color:#d8eeee;
+    font-size:13px;
+}
+
+.invoice-btn{
+    background:#f9c400;
+    color:#123b40;
+    border:0;
+    border-radius:9px;
+    padding:13px 20px;
+    font-weight:bold;
+    cursor:pointer;
+    white-space:nowrap;
+}
+
+/* FOOTER */
+.footer{
+    margin-top:35px;
+    background:#004f54;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.footer strong{
+    color:#f9c400;
+}
+
+.footer p{
+    margin:6px 0 0;
+    font-size:12px;
+    color:#d5e5e6;
+}
+
+/* MOBILE */
+@media(max-width:800px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .menu-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:550px){
+
+    .header{
+        padding:14px;
+    }
+
+    .brand h1{
+        font-size:19px;
+    }
+
+    .brand p{
+        font-size:10px;
+    }
+
+    .logo{
+        width:45px;
+        height:45px;
+        font-size:20px;
+    }
+
+    .header-right{
+        gap:5px;
+    }
+
+    .user-info{
+        display:none;
+    }
+
+    .logout-btn{
+        padding:8px 9px;
+        font-size:11px;
+    }
+
+    .menu-btn{
+        padding:8px 10px;
+    }
+
+    .container{
+        padding:18px 12px 30px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+
+    .stat{
+        padding:14px;
+    }
+
+    .stat h3{
+        font-size:21px;
+    }
+
+    .menu-grid{
+        grid-template-columns:1fr;
+    }
+
+    .quick{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .invoice-btn{
+        width:100%;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            Y<span>⚡</span>B
+        </div>
+
+        <div>
+            <h1>YALLA BATTERY</h1>
+            <p>WHEREVER YOU STOP, WE START</p>
+        </div>
+
+    </div>
+
+
+    <div class="header-right">
+
+        <div class="user-info">
+
+            <div class="user-name" id="currentUserName">
+                User
+            </div>
+
+            <div class="user-role" id="currentUserRole">
+                Staff
+            </div>
+
+        </div>
+
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            LOGOUT
+        </button>
+
+
+        <button
+            class="menu-btn"
+            onclick="alert('Yalla Battery CRM Menu')"
+        >
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="welcome">
+
+        <h2>Yalla Battery CRM</h2>
+
+        <p>
+            Welcome,
+            <strong id="welcomeUser">User</strong>.
+            Manage customers, invoices, batteries and vehicle information from one place.
+        </p>
+
+    </div>
+
+
+    <!-- DASHBOARD STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="icon">🧾</div>
+
+            <h3 id="invoiceCount">0</h3>
+
+            <p>Total Invoices</p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="icon">👤</div>
+
+            <h3 id="customerCount">0</h3>
+
+            <p>Total Customers</p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="icon">🔋</div>
+
+            <h3 id="stockCount">0</h3>
+
+            <p>Battery Stock</p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="icon">💰</div>
+
+            <h3 id="salesTotal">AED 0.00</h3>
+
+            <p>Total Sales</p>
+
+        </div>
+
+    </div>
+
+
+    <h2 class="section-title">
+        CRM Modules
+    </h2>
+
+
+    <div class="menu-grid">
+
+
+        <!-- CREATE INVOICE -->
+
+        <div
+            class="card primary"
+            onclick="openPage('invoice.html')"
+        >
+
+            <div class="card-icon">
+                🧾
+            </div>
+
+            <h3>
+                Create Invoice
+            </h3>
+
+            <p>
+                Create professional Yalla Battery invoices
+                with customer, battery, payment and VAT details.
+            </p>
+
+        </div>
+
+
+        <!-- INVOICE HISTORY -->
+
+        <div
+            class="card"
+            onclick="openPage('invoice-history.html')"
+        >
+
+            <div class="card-icon">
+                📋
+            </div>
+
+            <h3>
+                Invoice History
+            </h3>
+
+            <p>
+                View previous invoices, search invoices
+                and print or open invoice records.
+            </p>
+
+        </div>
+
+
+        <!-- CUSTOMERS -->
+
+        <div
+            class="card"
+            onclick="openPage('customers.html')"
+        >
+
+            <div class="card-icon">
+                👤
+            </div>
+
+            <h3>
+                Customers
+            </h3>
+
+            <p>
+                Save customer names, phone numbers,
+                email, vehicle details and service history.
+            </p>
+
+        </div>
+
+
+        <!-- BATTERY STOCK -->
+
+        <div
+            class="card"
+            onclick="openPage('battery-stock.html')"
+        >
+
+            <div class="card-icon">
+                🔋
+            </div>
+
+            <h3>
+                Battery Stock
+            </h3>
+
+            <p>
+                Manage battery brands, models, sizes,
+                quantities, cost prices and selling prices.
+            </p>
+
+        </div>
+
+
+        <!-- CAR DATABASE -->
+
+        <div
+            class="card"
+            onclick="openPage('car-database.html')"
+        >
+
+            <div class="card-icon">
+                🚗
+            </div>
+
+            <h3>
+                Car Database
+            </h3>
+
+            <p>
+                Manage vehicle make, model, year
+                and engine or variant information.
+            </p>
+
+        </div>
+
+
+        <!-- OWNER REPORTS -->
+
+        <div
+            class="card reports owner-only"
+            onclick="openPage('owner-reports.html')"
+        >
+
+            <div class="card-icon">
+                📊
+            </div>
+
+            <h3>
+                Owner Reports
+            </h3>
+
+            <p>
+                View total sales, total cost, profit,
+                invoice performance and business reports.
+            </p>
+
+        </div>
+
+
+        <!-- USERS MANAGEMENT -->
+
+        <div
+            class="card owner-only"
+            onclick="openPage('users.html')"
+        >
+
+            <div class="card-icon">
+                👥
+            </div>
+
+            <h3>
+                Users Management
+            </h3>
+
+            <p>
+                Manage CRM users, user names and access
+                roles for Owner and Staff accounts.
+            </p>
+
+        </div>
+
+
+        <!-- CRM SETTINGS -->
+
+        <div
+            class="card"
+            onclick="showSettings()"
+        >
+
+            <div class="card-icon">
+                ⚙️
+            </div>
+
+            <h3>
+                CRM Settings
+            </h3>
+
+            <p>
+                Manage company information, invoice
+                settings, VAT and payment methods.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUICK INVOICE -->
+
+    <div class="quick">
+
+        <div>
+
+            <h3>
+                Ready to create an invoice?
+            </h3>
+
+            <p>
+                Generate a professional Yalla Battery invoice for your customer.
+            </p>
+
+        </div>
+
+
+        <button
+            class="invoice-btn"
+            onclick="openPage('invoice.html')"
+        >
+            + CREATE INVOICE
+        </button>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <strong>
+        YALLA BATTERY
+    </strong>
+
+    <p>
+        Wherever You Stop, We Start • Mobile Battery Replacement & Roadside Assistance
+    </p>
+
+    <p>
+        Dubai, UAE • 24/7 Battery Service
+    </p>
+
+</footer>
+
+
+<script>
+
+/* ==========================================
+   LOGIN PROTECTION
+========================================== */
+
+const loggedIn =
+    sessionStorage.getItem("yallaLoggedIn");
+
+
+if(loggedIn !== "true"){
+
+    window.location.replace("login.html");
+
+}
+
+
+/* ==========================================
+   CURRENT USER
+========================================== */
+
+let currentUser = null;
+
+
+try{
+
+    currentUser =
+        JSON.parse(
+            sessionStorage.getItem("yallaCurrentUser") || "null"
+        );
+
+}catch(error){
+
+    currentUser = null;
+
+}
+
+
+/* SAFETY CHECK */
+
+if(!currentUser){
+
+    sessionStorage.removeItem("yallaLoggedIn");
+
+    window.location.replace("login.html");
+
+}
+
+
+/* ==========================================
+   SHOW CURRENT USER
+========================================== */
+
+if(currentUser){
+
+    document.getElementById("currentUserName").textContent =
+        currentUser.name;
+
+    document.getElementById("currentUserRole").textContent =
+        currentUser.role;
+
+    document.getElementById("welcomeUser").textContent =
+        currentUser.name;
+
+}
+
+
+/* ==========================================
+   OWNER ACCESS
+========================================== */
+
+if(
+    !currentUser ||
+    currentUser.role !== "Owner"
+){
+
+    document.querySelectorAll(".owner-only").forEach(function(card){
+
+        card.style.display = "none";
+
+    });
+
+}
+
+
+/* ==========================================
+   OPEN PAGE
+========================================== */
+
+function openPage(page){
+
+    window.location.href = page;
+
+}
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+function logout(){
+
+    const confirmLogout =
+        confirm("Are you sure you want to logout?");
+
+
+    if(!confirmLogout){
+
+        return;
+
+    }
+
+
+    sessionStorage.removeItem("yallaLoggedIn");
+
+    sessionStorage.removeItem("yallaCurrentUser");
+
+
+    window.location.replace("login.html");
+
+}
+
+
+/* ==========================================
+   SETTINGS
+========================================== */
+
+function showSettings(){
+
+    alert(
+        "Yalla Battery CRM Settings\n\n" +
+        "Company: Yalla Battery\n" +
+        "Service: Mobile Battery & Roadside Assistance\n" +
+        "VAT: 5%\n" +
+        "Payment: Card / Cash / Bank Transfer / Link"
+    );
+
+}
+
+
+/* ==========================================
+   DASHBOARD DATA
+========================================== */
+
+let invoices =
+    JSON.parse(
+        localStorage.getItem("yallaInvoices") || "[]"
+    );
+
+
+let customers =
+    JSON.parse(
+        localStorage.getItem("yallaCustomers") || "[]"
+    );
+
+
+let stock =
+    JSON.parse(
+        localStorage.getItem("yallaBatteryStock") || "[]"
+    );
+
+
+/* ==========================================
+   TOTAL INVOICES
+========================================== */
+
+document.getElementById("invoiceCount").textContent =
+    invoices.length;
+
+
+/* ==========================================
+   TOTAL CUSTOMERS
+========================================== */
+
+document.getElementById("customerCount").textContent =
+    customers.length;
+
+
+/* ==========================================
+   BATTERY STOCK
+========================================== */
+
+document.getElementById("stockCount").textContent =
+    stock.length;
+
+
+/* ==========================================
+   TOTAL SALES
+========================================== */
+
+let totalSales = 0;
+
+
+invoices.forEach(function(invoice){
+
+    totalSales += Number(
+        invoice.grandTotal ||
+        invoice.total ||
+        0
+    );
+
+});
+
+
+document.getElementById("salesTotal").textContent =
+    "AED " + totalSales.toFixed(2);
+
+
+</script>
+
+</body>
+</html>
