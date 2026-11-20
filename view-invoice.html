@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>View Invoice | Yalla Battery</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding:25px 0;
+    background:#eef1f4;
+    color:#17202a;
+    font-family:Roboto,Arial,Helvetica,sans-serif;
+}
+
+
+/* ================================
+   ACTION BUTTONS
+================================ */
+
+.actions{
+    width:794px;
+    max-width:calc(100% - 30px);
+    margin:0 auto 15px;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.actionBtn{
+    border:none;
+    padding:11px 18px;
+    border-radius:7px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.printBtn{
+    background:#ffb800;
+    color:#17202a;
+}
+
+.backBtn{
+    background:#17202a;
+    color:white;
+}
+
+.actionBtn:hover{
+    opacity:.88;
+}
+
+
+/* ================================
+   INVOICE
+================================ */
+
+.invoice{
+    width:794px;
+    max-width:calc(100% - 30px);
+    margin:25px auto;
+    background:white;
+    padding:25px;
+    box-shadow:0 4px 18px rgba(0,0,0,.12);
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.invoice-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:3px solid #00525b;
+    padding-bottom:14px;
+}
+
+.brand h1{
+    margin:0;
+    color:#00525b;
+    font-size:34px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.tagline{
+    margin-top:4px;
+    color:#666;
+    font-size:12px;
+    font-weight:700;
+}
+
+.tax-box{
+    background:#ffb800;
+    color:#17202a;
+    padding:9px 12px;
+    border-radius:5px;
+    text-align:right;
+    min-width:170px;
+}
+
+.tax-title{
+    font-size:15px;
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.tax-info{
+    font-size:10px;
+    line-height:1.55;
+}
+
+
+/* ================================
+   CUSTOMER + VEHICLE
+================================ */
+
+.customer-vehicle{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:16px;
+}
+
+.section-box{
+    border:1px solid #d6dde1;
+    border-radius:5px;
+    overflow:hidden;
+}
+
+.section-head{
+    background:#00525b;
+    color:white;
+    padding:8px 10px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.section-body{
+    padding:10px;
+}
+
+.customer-row{
+    display:grid;
+    grid-template-columns:75px 1fr;
+    gap:8px;
+    padding:4px 0;
+    font-size:11px;
+}
+
+.customer-label{
+    font-weight:700;
+    color:#555;
+}
+
+.customer-value{
+    color:#17202a;
+    word-break:break-word;
+}
+
+#customerTrnRow{
+    display:none;
+}
+
+
+/* ================================
+   SERVICE
+================================ */
+
+.service-box{
+    margin-top:12px;
+    border:1px solid #d6dde1;
+    border-radius:5px;
+    overflow:hidden;
+}
+
+.service-body{
+    padding:10px;
+    font-size:12px;
+    font-weight:700;
+}
+
+
+/* ================================
+   ITEMS
+================================ */
+
+.items{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+}
+
+.items th{
+    background:#00525b;
+    color:white;
+    padding:9px 8px;
+    font-size:10px;
+    text-align:left;
+}
+
+.items td{
+    border:1px solid #d6dde1;
+    padding:10px 8px;
+    font-size:11px;
+}
+
+.items th:nth-child(2),
+.items td:nth-child(2){
+    text-align:center;
+    width:55px;
+}
+
+.items th:nth-child(3),
+.items td:nth-child(3),
+.items th:nth-child(4),
+.items td:nth-child(4){
+    text-align:right;
+    width:110px;
+}
+
+.warranty{
+    display:block;
+    color:#777;
+    font-size:9px;
+    margin-top:4px;
+}
+
+
+/* ================================
+   BOTTOM GRID
+================================ */
+
+.bottom-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:15px;
+}
+
+
+/* ================================
+   PAYMENT
+================================ */
+
+.payment-box,
+.warranty-box{
+    border:1px solid #d6dde1;
+    border-radius:5px;
+    overflow:hidden;
+    margin-bottom:10px;
+}
+
+.box-head{
+    background:#00525b;
+    color:white;
+    padding:8px 10px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.box-body{
+    padding:10px;
+    font-size:11px;
+}
+
+.payment-value{
+    font-weight:700;
+}
+
+
+/* ================================
+   WARRANTY
+================================ */
+
+.warranty-options{
+    display:flex;
+    gap:20px;
+    font-size:11px;
+    font-weight:700;
+}
+
+
+/* ================================
+   TOTALS
+================================ */
+
+.total-box{
+    border:1px solid #d6dde1;
+    border-radius:5px;
+    overflow:hidden;
+}
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 10px;
+    border-bottom:1px solid #eee;
+    font-size:11px;
+}
+
+.grand-total{
+    display:flex;
+    justify-content:space-between;
+    background:#ffb800;
+    color:#17202a;
+    padding:11px 10px;
+    font-size:14px;
+    font-weight:900;
+}
+
+
+/* ================================
+   FEATURES
+================================ */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    margin-top:15px;
+    border:1px solid #d6dde1;
+    border-radius:5px;
+    overflow:hidden;
+}
+
+.feature{
+    text-align:center;
+    padding:10px 5px;
+    border-right:1px solid #d6dde1;
+}
+
+.feature:last-child{
+    border-right:none;
+}
+
+.feature strong{
+    display:block;
+    color:#00525b;
+    font-size:10px;
+}
+
+.feature span{
+    font-size:8px;
+    color:#777;
+}
+
+
+/* ================================
+   TERMS
+================================ */
+
+.terms{
+    margin-top:15px;
+    border-top:1px solid #d6dde1;
+    padding-top:10px;
+}
+
+.terms-title{
+    font-size:10px;
+    font-weight:800;
+    color:#00525b;
+    margin-bottom:5px;
+}
+
+.terms p{
+    margin:2px 0;
+    font-size:8px;
+    color:#666;
+    line-height:1.5;
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+.footer{
+    margin-top:15px;
+    background:#00525b;
+    color:white;
+    text-align:center;
+    padding:10px;
+    border-radius:4px;
+}
+
+.footer-company{
+    font-size:12px;
+    font-weight:900;
+}
+
+.footer-text{
+    margin-top:3px;
+    font-size:8px;
+}
+
+
+/* ================================
+   ERROR
+================================ */
+
+.error{
+    width:794px;
+    max-width:calc(100% - 30px);
+    margin:80px auto;
+    background:white;
+    padding:40px;
+    text-align:center;
+    border-radius:10px;
+    box-shadow:0 4px 18px rgba(0,0,0,.1);
+}
+
+.error h2{
+    color:#00525b;
+}
+
+.error button{
+    background:#00525b;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width:700px){
+
+    .invoice,
+    .actions{
+        width:calc(100% - 20px);
+        max-width:none;
+    }
+
+    .invoice{
+        padding:15px;
+    }
+
+    .invoice-header{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .brand h1{
+        font-size:28px;
+    }
+
+    .tax-box{
+        width:100%;
+        text-align:left;
+    }
+
+    .customer-vehicle{
+        grid-template-columns:1fr;
+    }
+
+    .bottom-grid{
+        grid-template-columns:1fr;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .feature{
+        border-right:none;
+        border-bottom:1px solid #d6dde1;
+    }
+
+    .feature:last-child{
+        border-bottom:none;
+    }
+
+    .items{
+        font-size:9px;
+    }
+
+    .items th,
+    .items td{
+        padding:7px 5px;
+    }
+
+}
+
+
+/* ================================
+   PRINT
+================================ */
+
+@media print{
+
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .actions{
+        display:none !important;
+    }
+
+    .invoice{
+        width:794px;
+        max-width:none;
+        margin:0 auto;
+        padding:25px;
+        box-shadow:none;
+    }
+
+    @page{
+        size:A4 portrait;
+        margin:0;
+    }
+
+    .section-box,
+    .service-box,
+    .items,
+    .payment-box,
+    .warranty-box,
+    .total-box,
+    .features,
+    .terms,
+    .footer{
+        page-break-inside:avoid;
+    }
+
+    .items{
+        font-size:12px;
+    }
+
+    .items th,
+    .items td{
+        padding:10px 7px;
+    }
+
+    *{
+        -webkit-print-color-adjust:exact !important;
+        print-color-adjust:exact !important;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- ================================
+     ACTION BUTTONS
+================================ -->
+
+<div class="actions">
+
+    <button
+        class="actionBtn backBtn"
+        onclick="goBack()"
+    >
+        ← BACK TO HISTORY
+    </button>
+
+    <button
+        class="actionBtn printBtn"
+        onclick="window.print()"
+    >
+        PRINT / SAVE PDF
+    </button>
+
+</div>
+
+
+<!-- ================================
+     INVOICE
+================================ -->
+
+<div
+    id="invoiceContainer"
+    class="invoice"
+>
+
+    <!-- HEADER -->
+
+    <div class="invoice-header">
+
+        <div class="brand">
+
+            <h1>
+                YALLA BATTERY
+            </h1>
+
+            <div class="tagline">
+                WHEREVER YOU STOP, WE START
+            </div>
+
+        </div>
+
+
+        <div class="tax-box">
+
+            <div class="tax-title">
+                TAX INVOICE
+            </div>
+
+            <div
+                class="tax-info"
+                id="invoiceInfo"
+            >
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CUSTOMER + VEHICLE -->
+
+    <div class="customer-vehicle">
+
+
+        <!-- CUSTOMER -->
+
+        <div class="section-box">
+
+            <div class="section-head">
+                CUSTOMER DETAILS
+            </div>
+
+            <div class="section-body">
+
+                <div class="customer-row">
+
+                    <div class="customer-label">
+                        Name
+                    </div>
+
+                    <div
+                        class="customer-value"
+                        id="outName"
+                    >
+                    </div>
+
+                </div>
+
+
+                <div class="customer-row">
+
+                    <div class="customer-label">
+                        Phone
+                    </div>
+
+                    <div
+                        class="customer-value"
+                        id="outPhone"
+                    >
+                    </div>
+
+                </div>
+
+
+                <div class="customer-row">
+
+                    <div class="customer-label">
+                        Email
+                    </div>
+
+                    <div
+                        class="customer-value"
+                        id="outEmail"
+                    >
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="customer-row"
+                    id="customerTrnRow"
+                >
+
+                    <div class="customer-label">
+                        TRN
+                    </div>
+
+                    <div
+                        class="customer-value"
+                        id="outCustomerTrn"
+                    >
+                    </div>
+
+                </div>
+
+
+                <div class="customer-row">
+
+                    <div class="customer-label">
+                        Address
+                    </div>
+
+                    <div
+                        class="customer-value"
+                        id="outAddress"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- VEHICLE -->
+
+        <div class="section-box">
+
+            <div class="section-head">
+                VEHICLE DETAILS
+            </div>
+
+            <div class="section-body">
+
+                <div class="customer-row">
+
+                    <div class="customer-label">
+                        Vehicle
+                    </div>
+
+                    <div
+                        class="customer-value"
+                        id="outVehicle"
+                    >
+                    </div>
+
+                </div>
+
+
+                <div class="customer-row">
+
+                    <div class="customer-label">
+                        Model
+                    </div>
+
+                    <div
+                        class="customer-value"
+                        id="outModel"
+                    >
+                    </div>
+
+                </div>
+
+
+                <div class="customer-row">
+
+                    <div class="customer-label">
+                        Year
+                    </div>
+
+                    <div
+                        class="customer-value"
+                        id="outYear"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SERVICE -->
+
+    <div class="service-box">
+
+        <div class="section-head">
+            SERVICE PROVIDED
+        </div>
+
+        <div
+            class="service-body"
+            id="outService"
+        >
+        </div>
+
+    </div>
+
+
+    <!-- ITEMS -->
+
+    <table class="items">
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    ITEM DESCRIPTION
+                </th>
+
+                <th>
+                    QTY
+                </th>
+
+                <th>
+                    UNIT PRICE (AED)
+                </th>
+
+                <th>
+                    TOTAL (AED)
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            <tr>
+
+                <td>
+
+                    <strong id="outItem">
+                    </strong>
+
+                    <span
+                        class="warranty"
+                        id="outWarranty"
+                    >
+                    </span>
+
+                </td>
+
+                <td id="outQty">
+                </td>
+
+                <td id="outUnit">
+                </td>
+
+                <td id="outItemTotal">
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <!-- BOTTOM -->
+
+    <div class="bottom-grid">
+
+
+        <!-- LEFT -->
+
+        <div>
+
+
+            <!-- PAYMENT -->
+
+            <div class="payment-box">
+
+                <div class="box-head">
+                    PAYMENT METHOD
+                </div>
+
+                <div class="box-body">
+
+                    <div
+                        class="payment-value"
+                        id="outPayment"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WARRANTY -->
+
+            <div class="warranty-box">
+
+                <div class="box-head">
+                    SHOP WARRANTY
+                </div>
+
+                <div class="box-body">
+
+                    <div class="warranty-options">
+
+                        <span id="warrantyYes">
+                            ☐ YES
+                        </span>
+
+                        <span id="warrantyNo">
+                            ☐ NO
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTALS -->
+
+        <div class="total-box">
+
+            <div class="total-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <strong id="outSubtotal">
+                    AED 0.00
+                </strong>
+
+            </div>
+
+
+            <div class="total-row">
+
+                <span>
+                    Discount
+                </span>
+
+                <strong id="outDiscount">
+                    AED 0.00
+                </strong>
+
+            </div>
+
+
+            <div class="total-row">
+
+                <span id="vatLabel">
+                    VAT 5%
+                </span>
+
+                <strong id="outVat">
+                    AED 0.00
+                </strong>
+
+            </div>
+
+
+            <div class="grand-total">
+
+                <span>
+                    GRAND TOTAL
+                </span>
+
+                <span id="outTotal">
+                    AED 0.00
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="features">
+
+        <div class="feature">
+
+            <strong>
+                FAST SERVICE
+            </strong>
+
+            <span>
+                Quick & Reliable Assistance
+            </span>
+
+        </div>
+
+
+        <div class="feature">
+
+            <strong>
+                PROFESSIONAL TECHNICIANS
+            </strong>
+
+            <span>
+                Experienced Battery Specialists
+            </span>
+
+        </div>
+
+
+        <div class="feature">
+
+            <strong>
+                QUALITY BATTERIES
+            </strong>
+
+            <span>
+                Reliable Battery Solutions
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- TERMS -->
+
+    <div class="terms">
+
+        <div class="terms-title">
+            TERMS & CONDITIONS
+        </div>
+
+        <p>
+            1. All batteries are covered only for the stated warranty period.
+        </p>
+
+        <p>
+            2. During the warranty period, only one warranty claim is allowed per battery.
+        </p>
+
+        <p>
+            3. Original invoice is required for any warranty claim.
+        </p>
+
+        <p>
+            4. Warranty covers manufacturing defects only and does not cover physical damage, accident, misuse, abuse, incorrect installation, modification, overheating, overcharging, deep discharge or improper maintenance.
+        </p>
+
+        <p>
+            5. Customer is responsible for ensuring correct installation and compatibility with the vehicle/application.
+        </p>
+
+        <p>
+            6. All sold items and batteries are non-refundable. No cash refund or exchange is allowed except for a valid warranty claim.
+        </p>
+
+        <p>
+            7. Warranty assessment is subject to inspection and testing by the company.
+        </p>
+
+        <p>
+            8. Warranty replacement does not create a new warranty period unless specifically stated.
+        </p>
+
+        <p>
+            9. If Shop Warranty is mentioned, AED 100 service charges apply. Otherwise, the customer must visit the shop for warranty service.
+        </p>
+
+        <p>
+            10. By accepting the battery/service, the customer confirms acceptance of these terms and conditions.
+        </p>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <div class="footer-company">
+            INSTANT AUTO REPAIR SERVICES L.L.C.
+        </div>
+
+        <div class="footer-text">
+            24/7 CAR BATTERY & ROADSIDE ASSISTANCE
+        </div>
+
+        <div class="footer-text">
+            +971 52 380 0568
+            |
+            info@yallabattery.ae
+            |
+            Dubai, UAE
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================
+     ERROR
+================================ -->
+
+<div
+    id="errorBox"
+    class="error"
+    style="display:none;"
+>
+
+    <h2>
+        Invoice Not Found
+    </h2>
+
+    <p>
+        Please go back to Invoice History and select an invoice.
+    </p>
+
+    <button onclick="goBack()">
+        BACK TO INVOICE HISTORY
+    </button>
+
+</div>
+
+
+<script>
+
+
+/* =========================================
+   GET SELECTED INVOICE
+========================================= */
+
+function getSelectedInvoice(){
+
+    const possibleKeys = [
+
+        "yallaSelectedInvoice",
+        "selectedInvoice",
+        "currentInvoice",
+        "invoiceData",
+        "viewInvoice",
+        "yallaInvoice"
+
+    ];
+
+
+    /* LOCAL STORAGE */
+
+    for(let key of possibleKeys){
+
+        try{
+
+            const data =
+                localStorage.getItem(key);
+
+            if(data){
+
+                const parsed =
+                    JSON.parse(data);
+
+                if(
+                    parsed &&
+                    typeof parsed === "object"
+                ){
+
+                    return parsed;
+
+                }
+
+            }
+
+        }catch(error){
+
+            console.warn(
+                "LocalStorage error:",
+                key,
+                error
+            );
+
+        }
+
+    }
+
+
+    /* SESSION STORAGE */
+
+    for(let key of possibleKeys){
+
+        try{
+
+            const data =
+                sessionStorage.getItem(key);
+
+            if(data){
+
+                const parsed =
+                    JSON.parse(data);
+
+                if(
+                    parsed &&
+                    typeof parsed === "object"
+                ){
+
+                    return parsed;
+
+                }
+
+            }
+
+        }catch(error){
+
+            console.warn(
+                "SessionStorage error:",
+                key,
+                error
+            );
+
+        }
+
+    }
+
+
+    /* URL FALLBACK */
+
+    try{
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const invoiceParam =
+            params.get("invoice");
+
+        if(invoiceParam){
+
+            try{
+
+                const decoded =
+                    decodeURIComponent(
+                        invoiceParam
+                    );
+
+                const parsed =
+                    JSON.parse(decoded);
+
+                if(parsed){
+
+                    return parsed;
+
+                }
+
+            }catch(error){
+
+                console.warn(
+                    "URL invoice parsing failed:",
+                    error
+                );
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "URL parameter error:",
+            error
+        );
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================
+   SAFE TEXT
+========================================= */
+
+function safe(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
+
+        return "-";
+
+    }
+
+    return String(value);
+
+}
+
+
+/* =========================================
+   NUMBER HELPER
+========================================= */
+
+function numberValue(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
+
+        return 0;
+
+    }
+
+    const cleaned =
+        String(value)
+        .replace(/AED/gi,"")
+        .replace(/,/g,"")
+        .trim();
+
+    const number =
+        Number(cleaned);
+
+    return isNaN(number)
+        ? 0
+        : number;
+
+}
+
+
+/* =========================================
+   LOAD INVOICE
+========================================= */
+
+function loadInvoice(){
+
+    const invoice =
+        getSelectedInvoice();
+
+
+    /* INVOICE NOT FOUND */
+
+    if(!invoice){
+
+        document
+            .getElementById("invoiceContainer")
+            .style.display = "none";
+
+        document
+            .getElementById("errorBox")
+            .style.display = "block";
+
+        return;
+
+    }
+
+
+    document
+        .getElementById("invoiceContainer")
+        .style.display = "block";
+
+    document
+        .getElementById("errorBox")
+        .style.display = "none";
+
+
+    /* =====================================
+       COMPANY TRN
+    ===================================== */
+
+    const companyTrn =
+        invoice.companyTrn ||
+        invoice.companyTRN ||
+        invoice.trn ||
+        "105121363300003";
+
+
+    /* =====================================
+       INVOICE INFO
+    ===================================== */
+
+    document
+        .getElementById("invoiceInfo")
+        .innerHTML = `
+
+            <strong>Invoice No:</strong>
+            ${safe(
+                invoice.invoiceNo ||
+                invoice.invoiceNumber
+            )}
+
+            <br>
+
+            <strong>Date:</strong>
+            ${safe(invoice.date)}
+
+            <br>
+
+            <strong>Time:</strong>
+            ${safe(invoice.time)}
+
+            <br>
+
+            <strong>TRN:</strong>
+            ${safe(companyTrn)}
+
+        `;
+
+
+    /* =====================================
+       CUSTOMER
+    ===================================== */
+
+    document
+        .getElementById("outName")
+        .textContent =
+        safe(
+            invoice.customerName ||
+            invoice.name ||
+            invoice.customer
+        );
+
+
+    document
+        .getElementById("outPhone")
+        .textContent =
+        safe(
+            invoice.phone ||
+            invoice.customerPhone
+        );
+
+
+    document
+        .getElementById("outEmail")
+        .textContent =
+        safe(
+            invoice.email ||
+            invoice.customerEmail
+        );
+
+
+    const customerTrn =
+        invoice.customerTrn ||
+        invoice.customerTRN ||
+        "";
+
+
+    if(customerTrn){
+
+        document
+            .getElementById("customerTrnRow")
+            .style.display = "grid";
+
+        document
+            .getElementById("outCustomerTrn")
+            .textContent =
+            customerTrn;
+
+    }else{
+
+        document
+            .getElementById("customerTrnRow")
+            .style.display = "none";
+
+    }
+
+
+    document
+        .getElementById("outAddress")
+        .textContent =
+        safe(
+            invoice.address ||
+            invoice.customerAddress
+        );
+
+
+    /* =====================================
+       VEHICLE
+    ===================================== */
+
+    document
+        .getElementById("outVehicle")
+        .textContent =
+        safe(
+            invoice.vehicle ||
+            invoice.car
+        );
+
+
+    document
+        .getElementById("outModel")
+        .textContent =
+        safe(
+            invoice.model ||
+            invoice.vehicleModel
+        );
+
+
+    document
+        .getElementById("outYear")
+        .textContent =
+        safe(
+            invoice.year ||
+            invoice.vehicleYear
+        );
+
+
+    /* =====================================
+       SERVICE
+    ===================================== */
+
+    document
+        .getElementById("outService")
+        .textContent =
+        safe(
+            invoice.service ||
+            invoice.serviceProvided
+        );
+
+
+    /* =====================================
+       ITEM
+    ===================================== */
+
+    document
+        .getElementById("outItem")
+        .textContent =
+        safe(
+            invoice.item ||
+            invoice.itemDescription ||
+            invoice.battery
+        );
+
+
+    /* =====================================
+       WARRANTY
+    ===================================== */
+
+    document
+        .getElementById("outWarranty")
+        .textContent =
+        invoice.warranty
+        ? "Warranty: " + invoice.warranty
+        : "";
+
+
+    /* =====================================
+       NUMBERS
+    ===================================== */
+
+    const qty =
+        numberValue(
+            invoice.qty ||
+            invoice.quantity ||
+            1
+        );
+
+
+    const unitPrice =
+        numberValue(
+            invoice.unitPrice ||
+            invoice.price ||
+            invoice.salePrice
+        );
+
+
+    const discount =
+        numberValue(
+            invoice.discount
+        );
+
+
+    /* =====================================
+       VAT MODE
+    ===================================== */
+
+    let chargeVat =
+        invoice.vatCharge;
+
+
+    if(
+        chargeVat === undefined ||
+        chargeVat === null ||
+        chargeVat === ""
+    ){
+
+        chargeVat =
+            invoice.chargeVat;
+
+    }
+
+
+    /*
+       If old invoice has no VAT mode,
+       use saved VAT amount.
+    */
+
+    if(
+        chargeVat === undefined ||
+        chargeVat === null ||
+        chargeVat === ""
+    ){
+
+        if(
+            invoice.vat !== undefined &&
+            invoice.vat !== null &&
+            invoice.vat !== ""
+        ){
+
+            const savedVat =
+                numberValue(invoice.vat);
+
+            chargeVat =
+                savedVat > 0
+                ? "YES"
+                : "NO";
+
+        }else{
+
+            chargeVat = "YES";
+
+        }
+
+    }
+
+
+    chargeVat =
+        String(chargeVat)
+        .toUpperCase()
+        .trim();
+
+
+    /* =====================================
+       CALCULATIONS
+    ===================================== */
+
+    const grossAmount =
+        qty * unitPrice;
+
+
+    let subtotal = 0;
+    let vat = 0;
+    let grandTotal = 0;
+
+
+    /* =====================================
+       VAT YES
+    ===================================== */
+
+    if(chargeVat === "YES"){
+
+        /*
+          Unit price is VAT EXCLUSIVE.
+
+          Example:
+
+          450.00
+          VAT 22.50
+          Total 472.50
+        */
+
+        subtotal =
+            Math.max(
+                grossAmount - discount,
+                0
+            );
+
+
+        vat =
+            subtotal * 0.05;
+
+
+        grandTotal =
+            subtotal + vat;
+
+    }
+
+
+    /* =====================================
+       VAT NO
+    ===================================== */
+
+    else{
+
+        /*
+          Unit price is VAT INCLUSIVE.
+
+          Example:
+
+          472.50 total
+
+          Net:
+          472.50 / 1.05
+          = 450.00
+
+          VAT:
+          22.50
+        */
+
+        grandTotal =
+            Math.max(
+                grossAmount - discount,
+                0
+            );
+
+
+        subtotal =
+            grandTotal / 1.05;
+
+
+        vat =
+            grandTotal - subtotal;
+
+    }
+
+
+    /* =====================================
+       VAT LABEL
+    ===================================== */
+
+    document
+        .getElementById("vatLabel")
+        .textContent =
+        chargeVat === "YES"
+        ? "VAT 5%"
+        : "VAT 5% (Included)";
+
+
+    /* =====================================
+       ITEM DETAILS
+    ===================================== */
+
+    document
+        .getElementById("outQty")
+        .textContent =
+        qty;
+
+
+    document
+        .getElementById("outUnit")
+        .textContent =
+        unitPrice.toFixed(2);
+
+
+    const itemTotal =
+        qty * unitPrice;
+
+
+    document
+        .getElementById("outItemTotal")
+        .textContent =
+        itemTotal.toFixed(2);
+
+
+    /* =====================================
+       TOTALS
+    ===================================== */
+
+    document
+        .getElementById("outSubtotal")
+        .textContent =
+        "AED " +
+        subtotal.toFixed(2);
+
+
+    document
+        .getElementById("outDiscount")
+        .textContent =
+        "AED " +
+        discount.toFixed(2);
+
+
+    document
+        .getElementById("outVat")
+        .textContent =
+        "AED " +
+        vat.toFixed(2);
+
+
+    document
+        .getElementById("outTotal")
+        .textContent =
+        "AED " +
+        grandTotal.toFixed(2);
+
+
+    /* =====================================
+       PAYMENT
+    ===================================== */
+
+    document
+        .getElementById("outPayment")
+        .textContent =
+        safe(
+            invoice.payment ||
+            invoice.paymentMethod
+        );
+
+
+    /* =====================================
+       SHOP WARRANTY
+    ===================================== */
+
+    const shopWarranty =
+        String(
+            invoice.shopWarranty || ""
+        )
+        .toUpperCase()
+        .trim();
+
+
+    const warrantyYes =
+        document.getElementById(
+            "warrantyYes"
+        );
+
+
+    const warrantyNo =
+        document.getElementById(
+            "warrantyNo"
+        );
+
+
+    warrantyYes.textContent =
+        shopWarranty === "YES"
+        ? "☑ YES"
+        : "☐ YES";
+
+
+    warrantyNo.textContent =
+        shopWarranty === "NO"
+        ? "☑ NO"
+        : "☐ NO";
+
+}
+
+
+/* =========================================
+   BACK TO HISTORY
+========================================= */
+
+function goBack(){
+
+    window.location.href =
+        "invoice-history.html";
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadInvoice();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
