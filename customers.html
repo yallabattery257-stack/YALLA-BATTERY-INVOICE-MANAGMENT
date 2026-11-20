@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Customers | Yalla Battery</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef1f4;
+    color:#17202a;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.header{
+    width:100%;
+    background:#00525b;
+    color:white;
+    padding:18px 20px;
+}
+
+.header-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.header-sub{
+    font-size:11px;
+    opacity:.85;
+    margin-top:3px;
+}
+
+
+/* ================================
+   BACK BUTTON
+================================ */
+
+.back-btn{
+    border:none;
+    background:#ffb800;
+    color:#17202a;
+    padding:10px 16px;
+    border-radius:6px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.back-btn:hover{
+    opacity:.9;
+}
+
+
+/* ================================
+   MAIN
+================================ */
+
+.container{
+    width:1100px;
+    max-width:calc(100% - 30px);
+    margin:25px auto;
+}
+
+
+/* ================================
+   TOP TITLE
+================================ */
+
+.page-title{
+    background:white;
+    padding:18px 20px;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    margin-bottom:15px;
+}
+
+.page-title h1{
+    margin:0;
+    color:#00525b;
+    font-size:22px;
+}
+
+.page-title p{
+    margin:5px 0 0;
+    color:#777;
+    font-size:12px;
+}
+
+
+/* ================================
+   SUMMARY
+================================ */
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.summary-card{
+    background:white;
+    padding:17px;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.summary-label{
+    color:#777;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+}
+
+.summary-value{
+    color:#00525b;
+    font-size:23px;
+    font-weight:900;
+    margin-top:5px;
+}
+
+
+/* ================================
+   SEARCH
+================================ */
+
+.search-box{
+    background:white;
+    padding:15px;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    margin-bottom:15px;
+}
+
+.search-box input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd3d8;
+    border-radius:6px;
+    outline:none;
+    font-size:13px;
+}
+
+.search-box input:focus{
+    border-color:#00525b;
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+.table-box{
+    background:white;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    overflow:hidden;
+}
+
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+thead th{
+    background:#00525b;
+    color:white;
+    padding:11px 9px;
+    text-align:left;
+    font-size:11px;
+    white-space:nowrap;
+}
+
+tbody td{
+    padding:11px 9px;
+    border-bottom:1px solid #e5e8ea;
+    font-size:11px;
+    vertical-align:middle;
+}
+
+tbody tr:hover{
+    background:#f8fafb;
+}
+
+
+/* ================================
+   CUSTOMER NAME
+================================ */
+
+.customer-name{
+    font-weight:800;
+    color:#00525b;
+}
+
+.phone{
+    color:#555;
+}
+
+
+/* ================================
+   BUTTONS
+================================ */
+
+.view-btn{
+    border:none;
+    background:#00525b;
+    color:white;
+    padding:7px 11px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:700;
+}
+
+.view-btn:hover{
+    opacity:.88;
+}
+
+
+/* ================================
+   EMPTY
+================================ */
+
+.empty{
+    text-align:center;
+    padding:45px 20px;
+    color:#777;
+}
+
+.empty strong{
+    display:block;
+    color:#00525b;
+    font-size:18px;
+    margin-bottom:6px;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width:700px){
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        max-width:calc(100% - 20px);
+        margin:15px auto;
+    }
+
+    .page-title{
+        padding:15px;
+    }
+
+    .back-btn{
+        padding:9px 11px;
+        font-size:11px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- ================================
+     HEADER
+================================ -->
+
+<div class="header">
+
+    <div class="header-inner">
+
+        <div>
+
+            <div class="logo">
+                YALLA BATTERY
+            </div>
+
+            <div class="header-sub">
+                Customer Management
+            </div>
+
+        </div>
+
+
+        <button
+            class="back-btn"
+            onclick="goBack()"
+        >
+            ← DASHBOARD
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================================
+     MAIN
+================================ -->
+
+<div class="container">
+
+
+    <!-- TITLE -->
+
+    <div class="page-title">
+
+        <h1>
+            Customer Management
+        </h1>
+
+        <p>
+            View customers and their invoice history
+        </p>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Customers
+            </div>
+
+            <div
+                class="summary-value"
+                id="totalCustomers"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Invoices
+            </div>
+
+            <div
+                class="summary-value"
+                id="totalInvoices"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Sales
+            </div>
+
+            <div
+                class="summary-value"
+                id="totalSales"
+            >
+                AED 0.00
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search customer name, phone, email, vehicle or invoice..."
+            oninput="renderCustomers()"
+        >
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="table-box">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            CUSTOMER
+                        </th>
+
+                        <th>
+                            PHONE
+                        </th>
+
+                        <th>
+                            EMAIL
+                        </th>
+
+                        <th>
+                            VEHICLE
+                        </th>
+
+                        <th>
+                            INVOICES
+                        </th>
+
+                        <th>
+                            TOTAL SALES
+                        </th>
+
+                        <th>
+                            LAST INVOICE
+                        </th>
+
+                        <th>
+                            ACTION
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="customersBody"
+                >
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =========================================
+   NUMBER HELPER
+========================================= */
+
+function numberValue(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
+
+        return 0;
+
+    }
+
+    const cleaned =
+        String(value)
+        .replace(/AED/gi,"")
+        .replace(/,/g,"")
+        .trim();
+
+    const number =
+        Number(cleaned);
+
+    return isNaN(number)
+        ? 0
+        : number;
+
+}
+
+
+/* =========================================
+   GET INVOICES
+========================================= */
+
+function getInvoices(){
+
+    try{
+
+        const data =
+            localStorage.getItem(
+                "yallaInvoices"
+            );
+
+        if(!data){
+
+            return [];
+
+        }
+
+        const parsed =
+            JSON.parse(data);
+
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
+
+    }catch(error){
+
+        console.error(
+            "Invoice data error:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================
+   GET CUSTOMERS
+========================================= */
+
+function getCustomers(){
+
+    try{
+
+        const data =
+            localStorage.getItem(
+                "yallaCustomers"
+            );
+
+        if(!data){
+
+            return [];
+
+        }
+
+        const parsed =
+            JSON.parse(data);
+
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
+
+    }catch(error){
+
+        console.error(
+            "Customer data error:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================
+   BUILD CUSTOMER LIST FROM INVOICES
+========================================= */
+
+function buildCustomers(){
+
+    const savedCustomers =
+        getCustomers();
+
+    const invoices =
+        getInvoices();
+
+
+    const map =
+        new Map();
+
+
+    /*
+       First use saved customers.
+    */
+
+    savedCustomers.forEach(
+        function(customer,index){
+
+            const name =
+                customer.customerName ||
+                customer.name ||
+                customer.customer ||
+                "";
+
+            const phone =
+                customer.phone ||
+                customer.customerPhone ||
+                "";
+
+            const email =
+                customer.email ||
+                customer.customerEmail ||
+                "";
+
+            const key =
+                (
+                    phone ||
+                    email ||
+                    name ||
+                    ("customer-" + index)
+                )
+                .toString()
+                .toLowerCase()
+                .trim();
+
+
+            if(!map.has(key)){
+
+                map.set(
+                    key,
+                    {
+                        name:name,
+                        phone:phone,
+                        email:email,
+                        vehicle:"",
+                        invoices:[],
+                        total:0,
+                        lastInvoice:null
+                    }
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+       Add invoice information.
+    */
+
+    invoices.forEach(
+        function(invoice){
+
+            const name =
+                invoice.customerName ||
+                invoice.name ||
+                invoice.customer ||
+                "";
+
+            const phone =
+                invoice.phone ||
+                invoice.customerPhone ||
+                "";
+
+            const email =
+                invoice.email ||
+                invoice.customerEmail ||
+                "";
+
+            const key =
+                (
+                    phone ||
+                    email ||
+                    name
+                )
+                .toString()
+                .toLowerCase()
+                .trim();
+
+
+            if(!key){
+
+                return;
+
+            }
+
+
+            if(!map.has(key)){
+
+                map.set(
+                    key,
+                    {
+                        name:name,
+                        phone:phone,
+                        email:email,
+                        vehicle:"",
+                        invoices:[],
+                        total:0,
+                        lastInvoice:null
+                    }
+                );
+
+            }
+
+
+            const customer =
+                map.get(key);
+
+
+            if(name){
+
+                customer.name =
+                    name;
+
+            }
+
+            if(phone){
+
+                customer.phone =
+                    phone;
+
+            }
+
+            if(email){
+
+                customer.email =
+                    email;
+
+            }
+
+
+            const vehicle =
+                invoice.vehicle ||
+                invoice.car ||
+                "";
+
+            if(vehicle){
+
+                customer.vehicle =
+                    vehicle;
+
+            }
+
+
+            customer.invoices.push(
+                invoice
+            );
+
+
+            const total =
+                numberValue(
+                    invoice.grandTotal ||
+                    invoice.total
+                );
+
+
+            customer.total +=
+                total;
+
+
+            /*
+               Find latest invoice.
+            */
+
+            if(
+                !customer.lastInvoice ||
+                String(
+                    invoice.createdAt ||
+                    invoice.date ||
+                    ""
+                ) >
+                String(
+                    customer.lastInvoice.createdAt ||
+                    customer.lastInvoice.date ||
+                    ""
+                )
+            ){
+
+                customer.lastInvoice =
+                    invoice;
+
+            }
+
+        }
+    );
+
+
+    return Array.from(
+        map.values()
+    );
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(value){
+
+    if(
+        value === null ||
+        value === undefined
+    ){
+
+        return "";
+
+    }
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+function updateSummary(){
+
+    const customers =
+        buildCustomers();
+
+    const invoices =
+        getInvoices();
+
+
+    let totalSales = 0;
+
+
+    invoices.forEach(
+        function(invoice){
+
+            totalSales +=
+                numberValue(
+                    invoice.grandTotal ||
+                    invoice.total
+                );
+
+        }
+    );
+
+
+    document
+        .getElementById("totalCustomers")
+        .textContent =
+        customers.length;
+
+
+    document
+        .getElementById("totalInvoices")
+        .textContent =
+        invoices.length;
+
+
+    document
+        .getElementById("totalSales")
+        .textContent =
+        "AED " +
+        totalSales.toFixed(2);
+
+}
+
+
+/* =========================================
+   RENDER CUSTOMERS
+========================================= */
+
+function renderCustomers(){
+
+    const customers =
+        buildCustomers();
+
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const filtered =
+        customers.filter(
+            function(customer){
+
+                const invoiceNumbers =
+                    customer.invoices
+                    .map(
+                        function(invoice){
+
+                            return (
+                                invoice.invoiceNo ||
+                                invoice.invoiceNumber ||
+                                ""
+                            );
+
+                        }
+                    )
+                    .join(" ");
+
+
+                const text = (
+
+                    customer.name +
+                    " " +
+                    customer.phone +
+                    " " +
+                    customer.email +
+                    " " +
+                    customer.vehicle +
+                    " " +
+                    invoiceNumbers
+
+                )
+                .toLowerCase();
+
+
+                return text.includes(
+                    search
+                );
+
+            }
+        );
+
+
+    const body =
+        document.getElementById(
+            "customersBody"
+        );
+
+
+    body.innerHTML = "";
+
+
+    /* EMPTY */
+
+    if(filtered.length === 0){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="empty"
+                >
+
+                    <strong>
+                        No Customers Found
+                    </strong>
+
+                    ${
+                        search
+                        ? "Try another search."
+                        : "Customers will appear here after invoices are created."
+                    }
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* CUSTOMERS */
+
+    filtered.forEach(
+        function(customer,index){
+
+            const lastInvoice =
+                customer.lastInvoice;
+
+
+            const lastInvoiceNo =
+                lastInvoice
+                ? (
+                    lastInvoice.invoiceNo ||
+                    lastInvoice.invoiceNumber ||
+                    "-"
+                )
+                : "-";
+
+
+            const vehicle =
+                customer.vehicle ||
+                "-";
+
+
+            const invoiceCount =
+                customer.invoices.length;
+
+
+            const total =
+                customer.total;
+
+
+            body.innerHTML += `
+
+                <tr>
+
+                    <td>
+
+                        <div class="customer-name">
+
+                            ${escapeHtml(
+                                customer.name || "-"
+                            )}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="phone">
+
+                            ${escapeHtml(
+                                customer.phone || "-"
+                            )}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+                            customer.email || "-"
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+                            vehicle
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+                            ${invoiceCount}
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+
+                            AED
+                            ${total.toFixed(2)}
+
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+                            lastInvoiceNo
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="view-btn"
+                            onclick="viewCustomer(${index}, '${encodeURIComponent(JSON.stringify(customer))}')"
+                        >
+                            VIEW
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   VIEW CUSTOMER
+========================================= */
+
+function viewCustomer(
+    index,
+    encodedCustomer
+){
+
+    try{
+
+        const customer =
+            JSON.parse(
+                decodeURIComponent(
+                    encodedCustomer
+                )
+            );
+
+
+        /*
+           Save selected customer
+           for customer-profile.html
+        */
+
+        localStorage.setItem(
+            "yallaSelectedCustomer",
+            JSON.stringify(customer)
+        );
+
+
+        /*
+           Open CUSTOMER PROFILE
+           instead of opening only
+           the latest invoice.
+        */
+
+        window.location.href =
+            "customer-profile.html";
+
+
+    }catch(error){
+
+        console.error(
+            "Customer view error:",
+            error
+        );
+
+        alert(
+            "Unable to open customer."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   BACK
+========================================= */
+
+function goBack(){
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        updateSummary();
+
+        renderCustomers();
+
+    }
+);
+
+
+/* =========================================
+   UPDATE WHEN STORAGE CHANGES
+========================================= */
+
+window.addEventListener(
+    "storage",
+    function(){
+
+        updateSummary();
+
+        renderCustomers();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
