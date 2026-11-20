@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Owner Reports | Yalla Battery</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f6f7;
+    color:#123b40;
+}
+
+/* HEADER */
+
+.header{
+    background:#005f64;
+    color:white;
+    padding:18px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:55px;
+    height:55px;
+    background:white;
+    color:#00777a;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#f9c400;
+    font-size:23px;
+}
+
+.brand h1{
+    margin:0;
+    font-size:24px;
+    letter-spacing:.5px;
+}
+
+.brand p{
+    margin:3px 0 0;
+    font-size:12px;
+    color:#f9c400;
+    font-weight:bold;
+}
+
+.back-btn{
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
+/* MAIN */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:25px 18px 40px;
+}
+
+.page-title{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    border-left:6px solid #f9c400;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.page-title h2{
+    margin:0 0 6px;
+    color:#005f64;
+}
+
+.page-title p{
+    margin:0;
+    color:#647477;
+    font-size:14px;
+}
+
+
+/* FILTER */
+
+.filter-box{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.filter-title{
+    margin:0 0 15px;
+    color:#005f64;
+    font-size:18px;
+}
+
+.filter-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr auto auto;
+    gap:12px;
+    align-items:end;
+}
+
+.field label{
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    color:#536669;
+    margin-bottom:6px;
+}
+
+.field input{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #d5dfe1;
+    border-radius:8px;
+    outline:none;
+    font-size:14px;
+}
+
+.field input:focus{
+    border-color:#005f64;
+}
+
+.filter-btn{
+    background:#005f64;
+    color:white;
+    border:0;
+    border-radius:8px;
+    padding:11px 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.reset-btn{
+    background:#f9c400;
+    color:#123b40;
+    border:0;
+    border-radius:8px;
+    padding:11px 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
+/* REPORT CARDS */
+
+.report-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.report-card{
+    background:white;
+    border-radius:13px;
+    padding:18px;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+    border-top:4px solid #00777a;
+}
+
+.report-card.profit{
+    border-top-color:#f9c400;
+}
+
+.report-card.cost{
+    border-top-color:#d95d39;
+}
+
+.report-card.invoices{
+    border-top-color:#005f64;
+}
+
+.report-icon{
+    font-size:25px;
+}
+
+.report-card h3{
+    margin:9px 0 4px;
+    color:#005f64;
+    font-size:23px;
+}
+
+.report-card p{
+    margin:0;
+    color:#758487;
+    font-size:13px;
+}
+
+
+/* TODAY / MONTH */
+
+.period-section{
+    margin-bottom:22px;
+}
+
+.period-title{
+    color:#005f64;
+    font-size:20px;
+    margin:0 0 14px;
+}
+
+.period-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.period-card{
+    background:white;
+    border-radius:13px;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+    border-left:5px solid #00777a;
+}
+
+.period-card.cost{
+    border-left-color:#d95d39;
+}
+
+.period-card.profit{
+    border-left-color:#f9c400;
+}
+
+.period-card .small-title{
+    color:#687779;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.period-card .amount{
+    color:#005f64;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.period-card.profit .amount{
+    color:#007a5a;
+}
+
+
+/* SUMMARY */
+
+.summary-box{
+    background:#005f64;
+    color:white;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:22px;
+    box-shadow:0 4px 13px rgba(0,0,0,.08);
+}
+
+.summary-box h3{
+    margin:0 0 15px;
+    color:#f9c400;
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.summary-item{
+    background:rgba(255,255,255,.08);
+    border-radius:10px;
+    padding:15px;
+}
+
+.summary-item span{
+    display:block;
+    font-size:12px;
+    color:#d6eeee;
+    margin-bottom:5px;
+}
+
+.summary-item strong{
+    font-size:20px;
+}
+
+
+/* TABLE */
+
+.table-box{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+    overflow:hidden;
+}
+
+.table-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.table-header h3{
+    margin:0;
+    color:#005f64;
+}
+
+.print-btn{
+    background:#f9c400;
+    color:#123b40;
+    border:0;
+    border-radius:8px;
+    padding:10px 15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.table-scroll{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+thead{
+    background:#005f64;
+    color:white;
+}
+
+th{
+    padding:12px 10px;
+    text-align:left;
+    font-size:12px;
+}
+
+td{
+    padding:12px 10px;
+    border-bottom:1px solid #e5ebec;
+    font-size:13px;
+}
+
+tbody tr:hover{
+    background:#f7fafb;
+}
+
+.profit-positive{
+    color:#007a5a;
+    font-weight:bold;
+}
+
+.profit-negative{
+    color:#c0392b;
+    font-weight:bold;
+}
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#7a888a;
+}
+
+
+/* FOOTER */
+
+.footer{
+    margin-top:35px;
+    background:#004f54;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.footer strong{
+    color:#f9c400;
+}
+
+.footer p{
+    margin:6px 0 0;
+    font-size:12px;
+    color:#d5e5e6;
+}
+
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .report-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .filter-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .period-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:550px){
+
+    .header{
+        padding:14px;
+    }
+
+    .brand h1{
+        font-size:19px;
+    }
+
+    .brand p{
+        font-size:10px;
+    }
+
+    .logo{
+        width:45px;
+        height:45px;
+        font-size:20px;
+    }
+
+    .container{
+        padding:18px 12px 30px;
+    }
+
+    .report-grid{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .report-card{
+        padding:14px;
+    }
+
+    .report-card h3{
+        font-size:18px;
+    }
+
+    .filter-grid{
+        grid-template-columns:1fr;
+    }
+
+    .filter-btn,
+    .reset-btn{
+        width:100%;
+    }
+
+    .period-grid{
+        grid-template-columns:1fr;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .table-header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .print-btn{
+        width:100%;
+    }
+
+}
+
+
+/* PRINT */
+
+@media print{
+
+    .header,
+    .filter-box,
+    .back-btn,
+    .print-btn,
+    .footer{
+        display:none !important;
+    }
+
+    body{
+        background:white;
+    }
+
+    .container{
+        max-width:none;
+        padding:0;
+    }
+
+    .page-title,
+    .report-card,
+    .period-card,
+    .summary-box,
+    .table-box{
+        box-shadow:none;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            Y<span>⚡</span>B
+        </div>
+
+        <div>
+
+            <h1>YALLA BATTERY</h1>
+
+            <p>
+                WHEREVER YOU STOP, WE START
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <button class="back-btn" onclick="goBack()">
+        ← BACK TO CRM
+    </button>
+
+</header>
+
+
+
+<main class="container">
+
+
+    <!-- TITLE -->
+
+    <div class="page-title">
+
+        <h2>Owner Reports</h2>
+
+        <p>
+            Business sales, cost, profit and invoice performance.
+        </p>
+
+    </div>
+
+
+
+    <!-- DATE FILTER -->
+
+    <div class="filter-box">
+
+        <h3 class="filter-title">
+            📅 Report Date Filter
+        </h3>
+
+
+        <div class="filter-grid">
+
+            <div class="field">
+
+                <label>
+                    FROM DATE
+                </label>
+
+                <input
+                    type="date"
+                    id="fromDate"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    TO DATE
+                </label>
+
+                <input
+                    type="date"
+                    id="toDate"
+                >
+
+            </div>
+
+
+            <button
+                class="filter-btn"
+                onclick="applyFilter()"
+            >
+                APPLY FILTER
+            </button>
+
+
+            <button
+                class="reset-btn"
+                onclick="resetFilter()"
+            >
+                RESET
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- OVERALL REPORT -->
+
+    <div class="report-grid">
+
+        <div class="report-card">
+
+            <div class="report-icon">
+                💰
+            </div>
+
+            <h3 id="totalSales">
+                AED 0.00
+            </h3>
+
+            <p>
+                Total Sales
+            </p>
+
+        </div>
+
+
+        <div class="report-card cost">
+
+            <div class="report-icon">
+                💸
+            </div>
+
+            <h3 id="totalCost">
+                AED 0.00
+            </h3>
+
+            <p>
+                Total Cost
+            </p>
+
+        </div>
+
+
+        <div class="report-card profit">
+
+            <div class="report-icon">
+                📈
+            </div>
+
+            <h3 id="totalProfit">
+                AED 0.00
+            </h3>
+
+            <p>
+                Total Profit
+            </p>
+
+        </div>
+
+
+        <div class="report-card invoices">
+
+            <div class="report-icon">
+                🧾
+            </div>
+
+            <h3 id="totalInvoices">
+                0
+            </h3>
+
+            <p>
+                Total Invoices
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- TODAY -->
+
+    <section class="period-section">
+
+        <h2 class="period-title">
+            📅 Today's Report
+        </h2>
+
+
+        <div class="period-grid">
+
+            <div class="period-card">
+
+                <div class="small-title">
+                    TODAY SALES
+                </div>
+
+                <div
+                    class="amount"
+                    id="todaySales"
+                >
+                    AED 0.00
+                </div>
+
+            </div>
+
+
+            <div class="period-card cost">
+
+                <div class="small-title">
+                    TODAY COST
+                </div>
+
+                <div
+                    class="amount"
+                    id="todayCost"
+                >
+                    AED 0.00
+                </div>
+
+            </div>
+
+
+            <div class="period-card profit">
+
+                <div class="small-title">
+                    TODAY PROFIT
+                </div>
+
+                <div
+                    class="amount"
+                    id="todayProfit"
+                >
+                    AED 0.00
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- THIS MONTH -->
+
+    <section class="period-section">
+
+        <h2 class="period-title">
+            📆 This Month's Report
+        </h2>
+
+
+        <div class="period-grid">
+
+            <div class="period-card">
+
+                <div class="small-title">
+                    MONTH SALES
+                </div>
+
+                <div
+                    class="amount"
+                    id="monthSales"
+                >
+                    AED 0.00
+                </div>
+
+            </div>
+
+
+            <div class="period-card cost">
+
+                <div class="small-title">
+                    MONTH COST
+                </div>
+
+                <div
+                    class="amount"
+                    id="monthCost"
+                >
+                    AED 0.00
+                </div>
+
+            </div>
+
+
+            <div class="period-card profit">
+
+                <div class="small-title">
+                    MONTH PROFIT
+                </div>
+
+                <div
+                    class="amount"
+                    id="monthProfit"
+                >
+                    AED 0.00
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary-box">
+
+        <h3>
+            📊 Business Summary
+        </h3>
+
+
+        <div class="summary-grid">
+
+            <div class="summary-item">
+
+                <span>
+                    Average Sale
+                </span>
+
+                <strong id="averageSale">
+                    AED 0.00
+                </strong>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <span>
+                    Average Profit
+                </span>
+
+                <strong id="averageProfit">
+                    AED 0.00
+                </strong>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <span>
+                    Profit Margin
+                </span>
+
+                <strong id="profitMargin">
+                    0%
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- INVOICE TABLE -->
+
+    <div class="table-box">
+
+        <div class="table-header">
+
+            <h3>
+                Invoice Profit Report
+            </h3>
+
+            <button
+                class="print-btn"
+                onclick="window.print()"
+            >
+                🖨 PRINT REPORT
+            </button>
+
+        </div>
+
+
+        <div class="table-scroll">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Invoice
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Vehicle
+                        </th>
+
+                        <th>
+                            Sale
+                        </th>
+
+                        <th>
+                            Cost
+                        </th>
+
+                        <th>
+                            Profit
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="reportTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<footer class="footer">
+
+    <strong>
+        YALLA BATTERY
+    </strong>
+
+    <p>
+        Wherever You Stop, We Start • Mobile Battery Replacement & Roadside Assistance
+    </p>
+
+    <p>
+        Dubai, UAE • 24/7 Battery Service
+    </p>
+
+</footer>
+
+
+
+<script>
+
+/* ================================
+   LOAD INVOICES
+================================ */
+
+let invoices =
+    JSON.parse(
+        localStorage.getItem("yallaInvoices") || "[]"
+    );
+
+
+let filteredInvoices = [...invoices];
+
+
+/* ================================
+   MONEY
+================================ */
+
+function money(value){
+
+    return "AED " + Number(value || 0).toFixed(2);
+
+}
+
+
+/* ================================
+   DATE
+================================ */
+
+function getInvoiceDate(invoice){
+
+    return (
+        invoice.date ||
+        invoice.invoiceDate ||
+        invoice.createdDate ||
+        ""
+    );
+
+}
+
+
+/* ================================
+   SALE
+================================ */
+
+function getSale(invoice){
+
+    if(invoice.saleTotal !== undefined){
+
+        return Number(invoice.saleTotal) || 0;
+
+    }
+
+    if(invoice.subtotal !== undefined){
+
+        return Number(invoice.subtotal) || 0;
+
+    }
+
+    return Number(
+        invoice.grandTotal ||
+        invoice.total ||
+        0
+    );
+
+}
+
+
+/* ================================
+   COST
+================================ */
+
+function getCost(invoice){
+
+    if(invoice.costTotal !== undefined){
+
+        return Number(invoice.costTotal) || 0;
+
+    }
+
+    if(invoice.costPrice !== undefined){
+
+        let qty =
+            Number(
+                invoice.qty ||
+                invoice.quantity ||
+                1
+            );
+
+        return (
+            Number(invoice.costPrice) || 0
+        ) * qty;
+
+    }
+
+    return 0;
+
+}
+
+
+/* ================================
+   PROFIT
+================================ */
+
+function getProfit(invoice){
+
+    if(invoice.profit !== undefined){
+
+        return Number(invoice.profit) || 0;
+
+    }
+
+    return getSale(invoice) - getCost(invoice);
+
+}
+
+
+/* ================================
+   CUSTOMER
+================================ */
+
+function getCustomer(invoice){
+
+    return (
+        invoice.customerName ||
+        invoice.name ||
+        invoice.customer ||
+        "—"
+    );
+
+}
+
+
+/* ================================
+   VEHICLE
+================================ */
+
+function getVehicle(invoice){
+
+    let vehicle =
+        invoice.vehicle ||
+        invoice.car ||
+        "";
+
+    let model =
+        invoice.model ||
+        "";
+
+    if(vehicle && model){
+
+        return vehicle + " " + model;
+
+    }
+
+    return vehicle || model || "—";
+
+}
+
+
+/* ================================
+   FORMAT DATE
+================================ */
+
+function formatDate(date){
+
+    if(!date){
+
+        return "—";
+
+    }
+
+    let d =
+        new Date(date);
+
+    if(isNaN(d.getTime())){
+
+        return date;
+
+    }
+
+    return d.toLocaleDateString(
+        "en-GB"
+    );
+
+}
+
+
+/* ================================
+   LOCAL DATE CHECK
+================================ */
+
+function getLocalDateKey(date){
+
+    let d =
+        new Date(date);
+
+    if(isNaN(d.getTime())){
+
+        return "";
+
+    }
+
+    return (
+        d.getFullYear() +
+        "-" +
+        String(
+            d.getMonth() + 1
+        ).padStart(2,"0") +
+        "-" +
+        String(
+            d.getDate()
+        ).padStart(2,"0")
+    );
+
+}
+
+
+/* ================================
+   TODAY REPORT
+================================ */
+
+function updateTodayReport(){
+
+    let now =
+        new Date();
+
+    let todayKey =
+        getLocalDateKey(now);
+
+
+    let todayInvoices =
+        invoices.filter(function(invoice){
+
+            let date =
+                getInvoiceDate(invoice);
+
+            if(!date){
+
+                return false;
+
+            }
+
+            return (
+                getLocalDateKey(date) ===
+                todayKey
+            );
+
+        });
+
+
+    let sales = 0;
+
+    let cost = 0;
+
+    let profit = 0;
+
+
+    todayInvoices.forEach(function(invoice){
+
+        sales += getSale(invoice);
+
+        cost += getCost(invoice);
+
+        profit += getProfit(invoice);
+
+    });
+
+
+    document.getElementById(
+        "todaySales"
+    ).textContent =
+        money(sales);
+
+
+    document.getElementById(
+        "todayCost"
+    ).textContent =
+        money(cost);
+
+
+    document.getElementById(
+        "todayProfit"
+    ).textContent =
+        money(profit);
+
+}
+
+
+/* ================================
+   MONTH REPORT
+================================ */
+
+function updateMonthReport(){
+
+    let now =
+        new Date();
+
+    let currentYear =
+        now.getFullYear();
+
+    let currentMonth =
+        now.getMonth();
+
+
+    let monthInvoices =
+        invoices.filter(function(invoice){
+
+            let date =
+                getInvoiceDate(invoice);
+
+            if(!date){
+
+                return false;
+
+            }
+
+            let d =
+                new Date(date);
+
+            if(isNaN(d.getTime())){
+
+                return false;
+
+            }
+
+            return (
+                d.getFullYear() === currentYear &&
+                d.getMonth() === currentMonth
+            );
+
+        });
+
+
+    let sales = 0;
+
+    let cost = 0;
+
+    let profit = 0;
+
+
+    monthInvoices.forEach(function(invoice){
+
+        sales += getSale(invoice);
+
+        cost += getCost(invoice);
+
+        profit += getProfit(invoice);
+
+    });
+
+
+    document.getElementById(
+        "monthSales"
+    ).textContent =
+        money(sales);
+
+
+    document.getElementById(
+        "monthCost"
+    ).textContent =
+        money(cost);
+
+
+    document.getElementById(
+        "monthProfit"
+    ).textContent =
+        money(profit);
+
+}
+
+
+/* ================================
+   APPLY FILTER
+================================ */
+
+function applyFilter(){
+
+    let from =
+        document.getElementById(
+            "fromDate"
+        ).value;
+
+
+    let to =
+        document.getElementById(
+            "toDate"
+        ).value;
+
+
+    filteredInvoices =
+        invoices.filter(function(invoice){
+
+            let invoiceDate =
+                getInvoiceDate(invoice);
+
+            if(!invoiceDate){
+
+                return true;
+
+            }
+
+
+            let date =
+                new Date(invoiceDate);
+
+            if(isNaN(date.getTime())){
+
+                return true;
+
+            }
+
+
+            date.setHours(
+                0,0,0,0
+            );
+
+
+            if(from){
+
+                let fromDate =
+                    new Date(from);
+
+                fromDate.setHours(
+                    0,0,0,0
+                );
+
+
+                if(date < fromDate){
+
+                    return false;
+
+                }
+
+            }
+
+
+            if(to){
+
+                let toDate =
+                    new Date(to);
+
+                toDate.setHours(
+                    23,59,59,999
+                );
+
+
+                if(date > toDate){
+
+                    return false;
+
+                }
+
+            }
+
+
+            return true;
+
+        });
+
+
+    updateReport();
+
+}
+
+
+/* ================================
+   RESET
+================================ */
+
+function resetFilter(){
+
+    document.getElementById(
+        "fromDate"
+    ).value = "";
+
+
+    document.getElementById(
+        "toDate"
+    ).value = "";
+
+
+    filteredInvoices =
+        [...invoices];
+
+
+    updateReport();
+
+}
+
+
+/* ================================
+   UPDATE MAIN REPORT
+================================ */
+
+function updateReport(){
+
+    let totalSales = 0;
+
+    let totalCost = 0;
+
+    let totalProfit = 0;
+
+
+    filteredInvoices.forEach(function(invoice){
+
+        totalSales += getSale(invoice);
+
+        totalCost += getCost(invoice);
+
+        totalProfit += getProfit(invoice);
+
+    });
+
+
+    let invoiceCount =
+        filteredInvoices.length;
+
+
+    document.getElementById(
+        "totalSales"
+    ).textContent =
+        money(totalSales);
+
+
+    document.getElementById(
+        "totalCost"
+    ).textContent =
+        money(totalCost);
+
+
+    document.getElementById(
+        "totalProfit"
+    ).textContent =
+        money(totalProfit);
+
+
+    document.getElementById(
+        "totalInvoices"
+    ).textContent =
+        invoiceCount;
+
+
+    let averageSale =
+        invoiceCount > 0
+        ? totalSales / invoiceCount
+        : 0;
+
+
+    document.getElementById(
+        "averageSale"
+    ).textContent =
+        money(averageSale);
+
+
+    let averageProfit =
+        invoiceCount > 0
+        ? totalProfit / invoiceCount
+        : 0;
+
+
+    document.getElementById(
+        "averageProfit"
+    ).textContent =
+        money(averageProfit);
+
+
+    let margin =
+        totalSales > 0
+        ? (totalProfit / totalSales) * 100
+        : 0;
+
+
+    document.getElementById(
+        "profitMargin"
+    ).textContent =
+        margin.toFixed(2) + "%";
+
+
+    renderTable();
+
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+function renderTable(){
+
+    let table =
+        document.getElementById(
+            "reportTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if(filteredInvoices.length === 0){
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="7" class="empty">
+                    No invoice records found.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    filteredInvoices.forEach(function(invoice){
+
+        let sale =
+            getSale(invoice);
+
+        let cost =
+            getCost(invoice);
+
+        let profit =
+            getProfit(invoice);
+
+
+        let invoiceNumber =
+            invoice.invoiceNo ||
+            invoice.invoiceNumber ||
+            invoice.number ||
+            "—";
+
+
+        let row =
+            document.createElement("tr");
+
+
+        let profitClass =
+            profit >= 0
+            ? "profit-positive"
+            : "profit-negative";
+
+
+        row.innerHTML = `
+
+            <td>
+                <strong>
+                    ${escapeHTML(invoiceNumber)}
+                </strong>
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    formatDate(
+                        getInvoiceDate(invoice)
+                    )
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    getCustomer(invoice)
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    getVehicle(invoice)
+                )}
+            </td>
+
+            <td>
+                ${money(sale)}
+            </td>
+
+            <td>
+                ${money(cost)}
+            </td>
+
+            <td class="${profitClass}">
+                ${money(profit)}
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+}
+
+
+/* ================================
+   HTML SAFETY
+================================ */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ================================
+   BACK
+================================ */
+
+function goBack(){
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* ================================
+   START
+================================ */
+
+updateReport();
+
+updateTodayReport();
+
+updateMonthReport();
+
+</script>
+
+</body>
+</html>
