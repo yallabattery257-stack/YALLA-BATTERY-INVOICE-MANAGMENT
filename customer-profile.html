@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Customer Profile | Yalla Battery</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef1f4;
+    color:#17202a;
+}
+
+
+/* HEADER */
+
+.header{
+    background:#00525b;
+    color:white;
+    padding:18px 20px;
+}
+
+.header-inner{
+    width:1100px;
+    max-width:calc(100% - 30px);
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.subtitle{
+    font-size:11px;
+    margin-top:3px;
+    opacity:.85;
+}
+
+.back-btn{
+    border:none;
+    background:#ffb800;
+    color:#17202a;
+    padding:10px 16px;
+    border-radius:6px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+
+/* MAIN */
+
+.container{
+    width:1100px;
+    max-width:calc(100% - 30px);
+    margin:25px auto;
+}
+
+
+/* PROFILE HEADER */
+
+.profile-card{
+    background:white;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    margin-bottom:15px;
+}
+
+.profile-title{
+    color:#00525b;
+    font-size:22px;
+    font-weight:900;
+}
+
+.profile-phone{
+    margin-top:5px;
+    color:#777;
+    font-size:12px;
+}
+
+
+/* CUSTOMER DETAILS */
+
+.details-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:18px;
+}
+
+.detail-box{
+    border:1px solid #d6dde1;
+    border-radius:6px;
+    padding:12px;
+}
+
+.detail-label{
+    font-size:10px;
+    color:#777;
+    text-transform:uppercase;
+    font-weight:700;
+}
+
+.detail-value{
+    margin-top:5px;
+    font-size:13px;
+    font-weight:800;
+    color:#00525b;
+    word-break:break-word;
+}
+
+
+/* SUMMARY */
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.summary-card{
+    background:white;
+    padding:17px;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.summary-label{
+    color:#777;
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+}
+
+.summary-value{
+    color:#00525b;
+    font-size:22px;
+    font-weight:900;
+    margin-top:5px;
+}
+
+
+/* INVOICES */
+
+.invoices-card{
+    background:white;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    overflow:hidden;
+}
+
+.card-header{
+    padding:16px 18px;
+    color:#00525b;
+    font-size:17px;
+    font-weight:900;
+    border-bottom:1px solid #e3e7e9;
+}
+
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+thead th{
+    background:#00525b;
+    color:white;
+    padding:11px 9px;
+    text-align:left;
+    font-size:10px;
+}
+
+tbody td{
+    padding:11px 9px;
+    border-bottom:1px solid #e5e8ea;
+    font-size:11px;
+}
+
+tbody tr:hover{
+    background:#f8fafb;
+}
+
+
+/* BUTTON */
+
+.view-btn{
+    border:none;
+    background:#00525b;
+    color:white;
+    padding:7px 12px;
+    border-radius:5px;
+    font-size:10px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.view-btn:hover{
+    opacity:.88;
+}
+
+
+/* EMPTY / ERROR */
+
+.empty{
+    text-align:center;
+    padding:45px 20px;
+    color:#777;
+}
+
+.error{
+    background:white;
+    padding:40px;
+    text-align:center;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.error h2{
+    color:#00525b;
+}
+
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .details-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        width:calc(100% - 20px);
+        max-width:none;
+        margin:15px auto;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .details-grid{
+        grid-template-columns:1fr;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .back-btn{
+        font-size:10px;
+        padding:9px 11px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="header-inner">
+
+        <div>
+
+            <div class="logo">
+                YALLA BATTERY
+            </div>
+
+            <div class="subtitle">
+                Customer Profile
+            </div>
+
+        </div>
+
+        <button
+            class="back-btn"
+            onclick="goBack()"
+        >
+            ← CUSTOMERS
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <!-- PROFILE -->
+
+    <div
+        class="profile-card"
+        id="profileCard"
+    >
+
+        <div
+            class="profile-title"
+            id="customerName"
+        >
+            Customer
+        </div>
+
+        <div
+            class="profile-phone"
+            id="customerPhone"
+        >
+        </div>
+
+
+        <div class="details-grid">
+
+
+            <div class="detail-box">
+
+                <div class="detail-label">
+                    Email
+                </div>
+
+                <div
+                    class="detail-value"
+                    id="customerEmail"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <div class="detail-label">
+                    Vehicle
+                </div>
+
+                <div
+                    class="detail-value"
+                    id="customerVehicle"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <div class="detail-label">
+                    Address
+                </div>
+
+                <div
+                    class="detail-value"
+                    id="customerAddress"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <div class="detail-label">
+                    Customer TRN
+                </div>
+
+                <div
+                    class="detail-value"
+                    id="customerTrn"
+                >
+                    -
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Invoices
+            </div>
+
+            <div
+                class="summary-value"
+                id="totalInvoices"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Spent
+            </div>
+
+            <div
+                class="summary-value"
+                id="totalSpent"
+            >
+                AED 0.00
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Last Invoice
+            </div>
+
+            <div
+                class="summary-value"
+                id="lastInvoice"
+            >
+                -
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- INVOICE HISTORY -->
+
+    <div class="invoices-card">
+
+        <div class="card-header">
+            Customer Invoice History
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            INVOICE NO
+                        </th>
+
+                        <th>
+                            DATE
+                        </th>
+
+                        <th>
+                            VEHICLE
+                        </th>
+
+                        <th>
+                            SERVICE
+                        </th>
+
+                        <th>
+                            PAYMENT
+                        </th>
+
+                        <th>
+                            TOTAL
+                        </th>
+
+                        <th>
+                            ACTION
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="invoiceBody"
+                >
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ERROR -->
+
+<div
+    id="errorBox"
+    class="container"
+    style="display:none;"
+>
+
+    <div class="error">
+
+        <h2>
+            Customer Not Found
+        </h2>
+
+        <p>
+            Please return to Customers and select a customer.
+        </p>
+
+        <button
+            class="view-btn"
+            onclick="goBack()"
+        >
+            BACK TO CUSTOMERS
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =========================================
+   NUMBER
+========================================= */
+
+function numberValue(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
+
+        return 0;
+
+    }
+
+    const cleaned =
+        String(value)
+        .replace(/AED/gi,"")
+        .replace(/,/g,"")
+        .trim();
+
+    const number =
+        Number(cleaned);
+
+    return isNaN(number)
+        ? 0
+        : number;
+
+}
+
+
+/* =========================================
+   SAFE HTML
+========================================= */
+
+function escapeHtml(value){
+
+    if(
+        value === null ||
+        value === undefined
+    ){
+
+        return "";
+
+    }
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   GET SELECTED CUSTOMER
+========================================= */
+
+function getCustomer(){
+
+    try{
+
+        const data =
+            localStorage.getItem(
+                "yallaSelectedCustomer"
+            );
+
+        if(!data){
+
+            return null;
+
+        }
+
+        return JSON.parse(data);
+
+    }catch(error){
+
+        console.error(
+            "Customer error:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* =========================================
+   GET ALL INVOICES
+========================================= */
+
+function getInvoices(){
+
+    try{
+
+        const data =
+            localStorage.getItem(
+                "yallaInvoices"
+            );
+
+        if(!data){
+
+            return [];
+
+        }
+
+        const invoices =
+            JSON.parse(data);
+
+        return Array.isArray(invoices)
+            ? invoices
+            : [];
+
+    }catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================
+   LOAD PROFILE
+========================================= */
+
+function loadProfile(){
+
+    const customer =
+        getCustomer();
+
+
+    if(!customer){
+
+        document
+            .getElementById("profileCard")
+            .style.display = "none";
+
+        document
+            .getElementById("errorBox")
+            .style.display = "block";
+
+        return;
+
+    }
+
+
+    const invoices =
+        getInvoices();
+
+
+    /* CUSTOMER DATA */
+
+    document
+        .getElementById("customerName")
+        .textContent =
+        customer.name ||
+        "Customer";
+
+
+    document
+        .getElementById("customerPhone")
+        .textContent =
+        customer.phone ||
+        "-";
+
+
+    document
+        .getElementById("customerEmail")
+        .textContent =
+        customer.email ||
+        "-";
+
+
+    document
+        .getElementById("customerVehicle")
+        .textContent =
+        customer.vehicle ||
+        "-";
+
+
+    document
+        .getElementById("customerAddress")
+        .textContent =
+        customer.address ||
+        "-";
+
+
+    document
+        .getElementById("customerTrn")
+        .textContent =
+        customer.customerTrn ||
+        "-";
+
+
+    /*
+       Find all invoices for this customer.
+    */
+
+    const customerPhone =
+        String(
+            customer.phone || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    const customerEmail =
+        String(
+            customer.email || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    const customerName =
+        String(
+            customer.name || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    const customerInvoices =
+        invoices.filter(
+            function(invoice){
+
+                const phone =
+                    String(
+                        invoice.phone ||
+                        invoice.customerPhone ||
+                        ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                const email =
+                    String(
+                        invoice.email ||
+                        invoice.customerEmail ||
+                        ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                const name =
+                    String(
+                        invoice.customerName ||
+                        invoice.name ||
+                        invoice.customer ||
+                        ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                if(
+                    customerPhone &&
+                    phone &&
+                    customerPhone === phone
+                ){
+
+                    return true;
+
+                }
+
+
+                if(
+                    customerEmail &&
+                    email &&
+                    customerEmail === email
+                ){
+
+                    return true;
+
+                }
+
+
+                if(
+                    customerName &&
+                    name &&
+                    customerName === name
+                ){
+
+                    return true;
+
+                }
+
+
+                return false;
+
+            }
+        );
+
+
+    /* SORT LATEST FIRST */
+
+    customerInvoices.sort(
+        function(a,b){
+
+            const dateA =
+                String(
+                    a.createdAt ||
+                    a.date ||
+                    ""
+                );
+
+            const dateB =
+                String(
+                    b.createdAt ||
+                    b.date ||
+                    ""
+                );
+
+            return dateB.localeCompare(
+                dateA
+            );
+
+        }
+    );
+
+
+    /* SUMMARY */
+
+    let totalSpent = 0;
+
+
+    customerInvoices.forEach(
+        function(invoice){
+
+            totalSpent +=
+                numberValue(
+                    invoice.grandTotal ||
+                    invoice.total
+                );
+
+        }
+    );
+
+
+    document
+        .getElementById("totalInvoices")
+        .textContent =
+        customerInvoices.length;
+
+
+    document
+        .getElementById("totalSpent")
+        .textContent =
+        "AED " +
+        totalSpent.toFixed(2);
+
+
+    if(customerInvoices.length){
+
+        document
+            .getElementById("lastInvoice")
+            .textContent =
+            customerInvoices[0].invoiceNo ||
+            customerInvoices[0].invoiceNumber ||
+            "-";
+
+    }else{
+
+        document
+            .getElementById("lastInvoice")
+            .textContent =
+            "-";
+
+    }
+
+
+    /* INVOICE TABLE */
+
+    const body =
+        document.getElementById(
+            "invoiceBody"
+        );
+
+
+    body.innerHTML = "";
+
+
+    if(customerInvoices.length === 0){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    class="empty"
+                >
+                    No invoices found for this customer.
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    customerInvoices.forEach(
+        function(invoice,index){
+
+            const invoiceNo =
+                invoice.invoiceNo ||
+                invoice.invoiceNumber ||
+                "-";
+
+
+            const vehicle =
+                invoice.vehicle ||
+                invoice.car ||
+                "-";
+
+
+            const service =
+                invoice.service ||
+                invoice.serviceProvided ||
+                "-";
+
+
+            const payment =
+                invoice.payment ||
+                invoice.paymentMethod ||
+                "-";
+
+
+            const total =
+                numberValue(
+                    invoice.grandTotal ||
+                    invoice.total
+                );
+
+
+            body.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            ${escapeHtml(invoiceNo)}
+                        </strong>
+                    </td>
+
+
+                    <td>
+                        ${escapeHtml(
+                            invoice.date || "-"
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${escapeHtml(vehicle)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHtml(service)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHtml(payment)}
+                    </td>
+
+
+                    <td>
+                        <strong>
+                            AED ${total.toFixed(2)}
+                        </strong>
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="view-btn"
+                            onclick="openInvoice(${index})"
+                        >
+                            VIEW
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    /*
+       Keep invoices available
+       for VIEW button.
+    */
+
+    window.customerInvoiceList =
+        customerInvoices;
+
+}
+
+
+/* =========================================
+   OPEN INVOICE
+========================================= */
+
+function openInvoice(index){
+
+    const invoices =
+        window.customerInvoiceList || [];
+
+
+    const invoice =
+        invoices[index];
+
+
+    if(!invoice){
+
+        alert(
+            "Invoice not found."
+        );
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "yallaSelectedInvoice",
+        JSON.stringify(invoice)
+    );
+
+
+    window.location.href =
+        "view-invoice.html";
+
+}
+
+
+/* =========================================
+   BACK
+========================================= */
+
+function goBack(){
+
+    window.location.href =
+        "customers.html";
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadProfile();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
