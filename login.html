@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | Yalla Battery CRM</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f6f7;
+    color:#123b40;
+}
+
+.login-box{
+    width:100%;
+    max-width:420px;
+    margin:20px;
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 8px 30px rgba(0,0,0,.10);
+}
+
+.logo-area{
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.logo{
+    width:70px;
+    height:70px;
+    margin:auto;
+    background:#005f64;
+    color:white;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#f9c400;
+}
+
+.logo-area h1{
+    margin:15px 0 4px;
+    color:#005f64;
+    font-size:24px;
+}
+
+.logo-area p{
+    margin:0;
+    color:#f9c400;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:22px;
+}
+
+.title h2{
+    margin:0 0 6px;
+    color:#005f64;
+}
+
+.title p{
+    margin:0;
+    color:#758487;
+    font-size:13px;
+}
+
+.field{
+    margin-bottom:17px;
+}
+
+.field label{
+    display:block;
+    margin-bottom:7px;
+    font-size:13px;
+    font-weight:bold;
+    color:#34565a;
+}
+
+.field input{
+    width:100%;
+    padding:13px;
+    border:1px solid #d6e1e2;
+    border-radius:9px;
+    outline:none;
+    font-size:14px;
+}
+
+.field input:focus{
+    border-color:#00777a;
+}
+
+.login-btn{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:9px;
+    background:#f9c400;
+    color:#123b40;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.login-btn:hover{
+    opacity:.92;
+}
+
+.error{
+    display:none;
+    margin-top:14px;
+    padding:11px;
+    border-radius:8px;
+    background:#ffe8e8;
+    color:#b32626;
+    text-align:center;
+    font-size:13px;
+}
+
+.footer{
+    text-align:center;
+    margin-top:22px;
+    color:#758487;
+    font-size:11px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            Y<span>⚡</span>B
+        </div>
+
+        <h1>YALLA BATTERY</h1>
+
+        <p>WHEREVER YOU STOP, WE START</p>
+
+    </div>
+
+
+    <div class="title">
+
+        <h2>CRM Login</h2>
+
+        <p>
+            Sign in to continue to Yalla Battery CRM
+        </p>
+
+    </div>
+
+
+    <form onsubmit="login(event)">
+
+        <!-- OWNER ID -->
+
+        <div class="field">
+
+            <label>Owner ID</label>
+
+            <input
+                type="text"
+                id="ownerId"
+                placeholder="Enter owner ID"
+                autocomplete="username"
+                required
+            >
+
+        </div>
+
+
+        <!-- USERNAME -->
+
+        <div class="field">
+
+            <label>User Name</label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter user name"
+                required
+            >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="field">
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                autocomplete="current-password"
+                required
+            >
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="login-btn"
+        >
+            LOGIN
+        </button>
+
+
+        <div
+            class="error"
+            id="error"
+        >
+            Invalid Owner ID, username or password.
+        </div>
+
+    </form>
+
+
+    <div class="footer">
+
+        Yalla Battery CRM • Dubai, UAE
+
+    </div>
+
+</div>
+
+
+<script>
+
+const STORAGE_KEY = "yallaCRMUsers";
+
+const CURRENT_OWNER_ID = "Husnain257";
+const CURRENT_USERNAME = "Husnain257";
+const CURRENT_PASSWORD = "Hus@786nain";
+
+
+/* GET USERS */
+
+let users =
+    JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+
+
+/*
+    FORCE NEW OWNER LOGIN
+    This removes the old default Owner
+    and creates the new owner.
+*/
+
+const correctOwnerExists =
+    users.some(function(item){
+
+        return (
+            item.ownerId === CURRENT_OWNER_ID &&
+            item.name === CURRENT_USERNAME &&
+            item.password === CURRENT_PASSWORD &&
+            item.role === "Owner"
+        );
+
+    });
+
+
+if(!correctOwnerExists){
+
+    users = [
+
+        {
+            ownerId: CURRENT_OWNER_ID,
+            name: CURRENT_USERNAME,
+            password: CURRENT_PASSWORD,
+            role: "Owner"
+        }
+
+    ];
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(users)
+    );
+
+}
+
+
+/* LOGIN */
+
+function login(event){
+
+    event.preventDefault();
+
+
+    const ownerId =
+        document.getElementById("ownerId")
+        .value
+        .trim();
+
+
+    const username =
+        document.getElementById("username")
+        .value
+        .trim();
+
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+
+    const error =
+        document.getElementById("error");
+
+
+    const user =
+        users.find(function(item){
+
+            return (
+                item.ownerId === ownerId
+                &&
+                item.name.toLowerCase() ===
+                username.toLowerCase()
+                &&
+                item.password === password
+                &&
+                item.role === "Owner"
+            );
+
+        });
+
+
+    if(!user){
+
+        error.style.display = "block";
+
+        return;
+
+    }
+
+
+    /* SAVE LOGIN SESSION */
+
+    sessionStorage.setItem(
+        "yallaLoggedIn",
+        "true"
+    );
+
+
+    sessionStorage.setItem(
+        "yallaCurrentUser",
+        JSON.stringify({
+
+            ownerId:user.ownerId,
+
+            name:user.name,
+
+            role:user.role
+
+        })
+    );
+
+
+    /* GO TO DASHBOARD */
+
+    window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+</html>
