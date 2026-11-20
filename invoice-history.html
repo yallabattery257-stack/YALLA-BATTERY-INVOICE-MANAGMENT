@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Invoice History | Yalla Battery</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f6f8;
+    color:#17202a;
+}
+
+.header{
+    background:#111827;
+    color:#fff;
+    padding:22px 20px;
+    text-align:center;
+}
+
+.header h1{
+    margin:0;
+    font-size:28px;
+}
+
+.header p{
+    margin:7px 0 0;
+    color:#f5c400;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:1200px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.search-box{
+    flex:1;
+    min-width:250px;
+}
+
+.search-box input{
+    width:100%;
+    padding:13px 15px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+}
+
+.search-box input:focus{
+    border-color:#f5c400;
+}
+
+.back-btn{
+    background:#111827;
+    color:#fff;
+    border:none;
+    padding:13px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.back-btn:hover{
+    background:#000;
+}
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.summary-card{
+    background:#fff;
+    border-radius:10px;
+    padding:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.summary-card h3{
+    margin:0 0 8px;
+    font-size:14px;
+    color:#6b7280;
+}
+
+.summary-card p{
+    margin:0;
+    font-size:23px;
+    font-weight:bold;
+}
+
+.table-wrapper{
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1000px;
+}
+
+thead{
+    background:#111827;
+    color:#fff;
+}
+
+th{
+    padding:14px 10px;
+    font-size:13px;
+    text-align:left;
+    white-space:nowrap;
+}
+
+td{
+    padding:13px 10px;
+    border-bottom:1px solid #e5e7eb;
+    font-size:13px;
+    white-space:nowrap;
+}
+
+tbody tr:hover{
+    background:#fafafa;
+}
+
+.action-btn{
+    border:none;
+    padding:8px 11px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:bold;
+    margin-right:4px;
+}
+
+.view-btn{
+    background:#2563eb;
+    color:#fff;
+}
+
+.print-btn{
+    background:#f5c400;
+    color:#111;
+}
+
+.delete-btn{
+    background:#dc2626;
+    color:#fff;
+}
+
+.action-btn:hover{
+    opacity:.85;
+}
+
+.no-data{
+    text-align:center;
+    padding:40px 20px;
+    color:#6b7280;
+    font-size:15px;
+}
+
+@media(max-width:900px){
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .header h1{
+        font-size:23px;
+    }
+
+    .container{
+        margin-top:15px;
+    }
+
+    .summary{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .summary-card{
+        padding:14px;
+    }
+
+    .summary-card p{
+        font-size:19px;
+    }
+
+    .top-bar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .back-btn{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>YALLA BATTERY</h1>
+    <p>INVOICE HISTORY</p>
+</div>
+
+<div class="container">
+
+    <div class="top-bar">
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search invoice, customer, phone, vehicle..."
+                oninput="renderInvoices()"
+            >
+        </div>
+
+        <button class="back-btn" onclick="goBack()">
+            ← BACK
+        </button>
+
+    </div>
+
+    <div class="summary">
+
+        <div class="summary-card">
+            <h3>Total Invoices</h3>
+            <p id="totalInvoices">0</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Total Sales</h3>
+            <p id="totalSales">AED 0.00</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Total VAT</h3>
+            <p id="totalVAT">AED 0.00</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Average Invoice</h3>
+            <p id="averageInvoice">AED 0.00</p>
+        </div>
+
+    </div>
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Invoice No</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Vehicle</th>
+                    <th>Payment</th>
+                    <th>VAT</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="invoiceTableBody"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function getInvoices(){
+
+    try{
+
+        const data = localStorage.getItem("yallaInvoices");
+
+        if(!data){
+            return [];
+        }
+
+        const invoices = JSON.parse(data);
+
+        return Array.isArray(invoices) ? invoices : [];
+
+    }catch(error){
+
+        console.error("Invoice loading error:",error);
+
+        return [];
+
+    }
+
+}
+
+
+function escapeHTML(value){
+
+    if(value === null || value === undefined){
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+    return escapeHTML(value);
+
+}
+
+
+function formatMoney(value){
+
+    const number = Number(value || 0);
+
+    return number.toFixed(2);
+
+}
+
+
+function getInvoiceDate(invoice){
+
+    return invoice.date ||
+           invoice.invoiceDate ||
+           invoice.createdAt ||
+           "";
+
+}
+
+
+function getCustomerName(invoice){
+
+    return invoice.customer ||
+           invoice.customerName ||
+           invoice.name ||
+           "";
+
+}
+
+
+function getPhone(invoice){
+
+    return invoice.phone ||
+           invoice.customerPhone ||
+           "";
+
+}
+
+
+function getVehicle(invoice){
+
+    return invoice.vehicle ||
+           invoice.vehicleMake ||
+           invoice.car ||
+           "";
+
+}
+
+
+function getModel(invoice){
+
+    return invoice.model ||
+           invoice.vehicleModel ||
+           "";
+
+}
+
+
+function getPayment(invoice){
+
+    return invoice.payment ||
+           invoice.paymentMethod ||
+           "";
+
+}
+
+
+function getInvoiceNumber(invoice){
+
+    return invoice.invoiceNo ||
+           invoice.invoiceNumber ||
+           invoice.number ||
+           "";
+
+}
+
+
+function renderInvoices(){
+
+    const invoices = getInvoices();
+
+    const searchInput =
+        document.getElementById("searchInput").value
+        .trim()
+        .toLowerCase();
+
+    const filteredInvoices = invoices.filter(invoice => {
+
+        const invoiceNo = getInvoiceNumber(invoice).toLowerCase();
+        const customer = getCustomerName(invoice).toLowerCase();
+        const phone = getPhone(invoice).toLowerCase();
+        const vehicle = getVehicle(invoice).toLowerCase();
+        const model = getModel(invoice).toLowerCase();
+
+        return (
+            invoiceNo.includes(searchInput) ||
+            customer.includes(searchInput) ||
+            phone.includes(searchInput) ||
+            vehicle.toLowerCase().includes(searchInput) ||
+            model.includes(searchInput)
+        );
+
+    });
+
+
+    updateSummary(filteredInvoices);
+
+
+    const tbody =
+        document.getElementById("invoiceTableBody");
+
+
+    if(filteredInvoices.length === 0){
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="9" class="no-data">
+                    No invoices found.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML = filteredInvoices.map(invoice => {
+
+        const invoiceNo = getInvoiceNumber(invoice);
+        const date = getInvoiceDate(invoice);
+        const customer = getCustomerName(invoice);
+        const phone = getPhone(invoice);
+        const vehicle = getVehicle(invoice);
+        const model = getModel(invoice);
+        const payment = getPayment(invoice);
+
+        const vat =
+            Number(invoice.vat || 0);
+
+        const grandTotal =
+            Number(
+                invoice.grandTotal ||
+                invoice.total ||
+                0
+            );
+
+
+        const vehicleText =
+            model
+            ? `${vehicle} ${model}`
+            : vehicle;
+
+
+        return `
+
+            <tr>
+
+                <td>
+                    ${escapeHTML(invoiceNo)}
+                </td>
+
+                <td>
+                    ${escapeHTML(date)}
+                </td>
+
+                <td>
+                    ${escapeHTML(customer)}
+                </td>
+
+                <td>
+                    ${escapeHTML(phone)}
+                </td>
+
+                <td>
+                    ${escapeHTML(vehicleText)}
+                </td>
+
+                <td>
+                    ${escapeHTML(payment)}
+                </td>
+
+                <td>
+                    AED ${formatMoney(vat)}
+                </td>
+
+                <td>
+                    AED ${formatMoney(grandTotal)}
+                </td>
+
+                <td>
+
+                    <button
+                        class="action-btn view-btn"
+                        onclick="viewInvoice('${escapeAttribute(invoiceNo)}')"
+                    >
+                        VIEW
+                    </button>
+
+                    <button
+                        class="action-btn print-btn"
+                        onclick="printInvoice('${escapeAttribute(invoiceNo)}')"
+                    >
+                        PRINT
+                    </button>
+
+                    <button
+                        class="action-btn delete-btn"
+                        onclick="deleteInvoice('${escapeAttribute(invoiceNo)}')"
+                    >
+                        DELETE
+                    </button>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }).join("");
+
+}
+
+
+function updateSummary(invoices){
+
+    let totalSales = 0;
+    let totalVAT = 0;
+
+
+    invoices.forEach(invoice => {
+
+        const grandTotal =
+            Number(
+                invoice.grandTotal ||
+                invoice.total ||
+                0
+            );
+
+        const vat =
+            Number(invoice.vat || 0);
+
+
+        totalSales += grandTotal;
+        totalVAT += vat;
+
+    });
+
+
+    const totalInvoices = invoices.length;
+
+
+    const average =
+        totalInvoices > 0
+        ? totalSales / totalInvoices
+        : 0;
+
+
+    document.getElementById("totalInvoices")
+        .textContent = totalInvoices;
+
+
+    document.getElementById("totalSales")
+        .textContent =
+        "AED " + formatMoney(totalSales);
+
+
+    document.getElementById("totalVAT")
+        .textContent =
+        "AED " + formatMoney(totalVAT);
+
+
+    document.getElementById("averageInvoice")
+        .textContent =
+        "AED " + formatMoney(average);
+
+}
+
+
+function findInvoice(invoiceNo){
+
+    const invoices = getInvoices();
+
+    return invoices.find(invoice => {
+
+        return String(
+            getInvoiceNumber(invoice)
+        ) === String(invoiceNo);
+
+    });
+
+}
+
+
+function viewInvoice(invoiceNo){
+
+    const invoice = findInvoice(invoiceNo);
+
+    if(!invoice){
+
+        alert("Invoice not found.");
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "yallaSelectedInvoice",
+        JSON.stringify(invoice)
+    );
+
+
+    /*
+        IMPORTANT:
+        Actual file name is view-invoice.html
+    */
+
+    window.location.href = "view-invoice.html";
+
+}
+
+
+function printInvoice(invoiceNo){
+
+    const invoice = findInvoice(invoiceNo);
+
+    if(!invoice){
+
+        alert("Invoice not found.");
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "yallaSelectedInvoice",
+        JSON.stringify(invoice)
+    );
+
+
+    /*
+        Open invoice view page.
+        Printing can then be done from that page.
+    */
+
+    window.location.href = "view-invoice.html";
+
+}
+
+
+function deleteInvoice(invoiceNo){
+
+    const invoices = getInvoices();
+
+    const invoice = findInvoice(invoiceNo);
+
+
+    if(!invoice){
+
+        alert("Invoice not found.");
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete invoice " +
+            invoiceNo +
+            "?"
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    const updatedInvoices =
+        invoices.filter(item => {
+
+            return String(
+                getInvoiceNumber(item)
+            ) !== String(invoiceNo);
+
+        });
+
+
+    localStorage.setItem(
+        "yallaInvoices",
+        JSON.stringify(updatedInvoices)
+    );
+
+
+    renderInvoices();
+
+}
+
+
+function goBack(){
+
+    window.location.href = "index.html";
+
+}
+
+
+/* Load invoices when page opens */
+
+renderInvoices();
+
+</script>
+
+</body>
+</html>
