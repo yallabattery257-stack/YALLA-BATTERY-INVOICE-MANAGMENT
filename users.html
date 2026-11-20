@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Users Management | Yalla Battery CRM</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f6f7;
+    color:#123b40;
+}
+
+
+/* HEADER */
+
+.header{
+    background:#005f64;
+    color:white;
+    padding:18px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:55px;
+    height:55px;
+    background:white;
+    color:#00777a;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#f9c400;
+    font-size:23px;
+}
+
+.brand h1{
+    margin:0;
+    font-size:24px;
+}
+
+.brand p{
+    margin:3px 0 0;
+    font-size:12px;
+    color:#f9c400;
+    font-weight:bold;
+}
+
+.back-btn{
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    color:white;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+
+/* MAIN */
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:25px 18px 45px;
+}
+
+
+/* TITLE */
+
+.page-title{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    border-left:6px solid #f9c400;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.page-title h2{
+    margin:0 0 6px;
+    color:#005f64;
+}
+
+.page-title p{
+    margin:0;
+    color:#687779;
+    font-size:14px;
+}
+
+
+/* FORM CARD */
+
+.form-card{
+    background:white;
+    border-radius:14px;
+    padding:24px;
+    box-shadow:0 4px 13px rgba(0,0,0,.07);
+    margin-bottom:25px;
+}
+
+.form-card h3{
+    margin:0 0 20px;
+    color:#005f64;
+    font-size:19px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+}
+
+.field label{
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+    color:#34565a;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d6e1e2;
+    border-radius:8px;
+    outline:none;
+    font-size:14px;
+    background:white;
+    color:#123b40;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#00777a;
+    box-shadow:0 0 0 2px rgba(0,119,122,.08);
+}
+
+.full{
+    grid-column:1 / -1;
+}
+
+
+/* BUTTONS */
+
+.form-buttons{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    border:0;
+    border-radius:8px;
+    padding:12px 20px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.save-btn{
+    background:#f9c400;
+    color:#123b40;
+}
+
+.cancel-btn{
+    background:#e8eeee;
+    color:#34565a;
+    display:none;
+}
+
+
+/* USERS TABLE */
+
+.table-card{
+    background:white;
+    border-radius:14px;
+    padding:24px;
+    box-shadow:0 4px 13px rgba(0,0,0,.07);
+}
+
+.table-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.table-header h3{
+    margin:0;
+    color:#005f64;
+}
+
+.user-count{
+    background:#e8f5f5;
+    color:#005f64;
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th{
+    background:#005f64;
+    color:white;
+    padding:13px;
+    text-align:left;
+    font-size:13px;
+}
+
+td{
+    padding:13px;
+    border-bottom:1px solid #e5eeee;
+    font-size:13px;
+}
+
+tr:hover td{
+    background:#f8fbfb;
+}
+
+
+/* ROLE */
+
+.role{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.role.owner{
+    background:#fff5c9;
+    color:#826800;
+}
+
+.role.staff{
+    background:#e5f4f4;
+    color:#005f64;
+}
+
+
+/* ACTION BUTTONS */
+
+.edit-btn{
+    background:#e8f5f5;
+    color:#005f64;
+    border:0;
+    padding:7px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-right:5px;
+}
+
+.delete-btn{
+    background:#ffe8e8;
+    color:#b32626;
+    border:0;
+    padding:7px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:35px 15px;
+    color:#758487;
+}
+
+.empty-icon{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+
+/* FOOTER */
+
+.footer{
+    margin-top:30px;
+    background:#004f54;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.footer strong{
+    color:#f9c400;
+}
+
+.footer p{
+    margin:6px 0 0;
+    font-size:12px;
+    color:#d5e5e6;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .header{
+        padding:14px;
+    }
+
+    .brand h1{
+        font-size:19px;
+    }
+
+    .brand p{
+        font-size:10px;
+    }
+
+    .logo{
+        width:45px;
+        height:45px;
+        font-size:20px;
+    }
+
+    .container{
+        padding:18px 12px 35px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .form-card,
+    .table-card{
+        padding:18px;
+    }
+
+    .back-btn{
+        padding:9px 11px;
+        font-size:12px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            Y<span>⚡</span>B
+        </div>
+
+        <div>
+
+            <h1>YALLA BATTERY</h1>
+
+            <p>
+                WHEREVER YOU STOP, WE START
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <button class="back-btn" onclick="goBack()">
+        ← Dashboard
+    </button>
+
+</header>
+
+
+
+<main class="container">
+
+
+    <!-- PAGE TITLE -->
+
+    <div class="page-title">
+
+        <h2>Users Management</h2>
+
+        <p>
+            Manage CRM users, user names and access roles.
+        </p>
+
+    </div>
+
+
+
+    <!-- ADD USER -->
+
+    <div class="form-card">
+
+        <h3 id="formTitle">
+            ➕ Add New User
+        </h3>
+
+
+        <div class="form-grid">
+
+
+            <div class="field">
+
+                <label>User Name</label>
+
+                <input
+                    type="text"
+                    id="userName"
+                    placeholder="Enter user name"
+                >
+
+            </div>
+
+
+
+            <div class="field">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    id="userPassword"
+                    placeholder="Enter password"
+                >
+
+            </div>
+
+
+
+            <div class="field">
+
+                <label>User Role</label>
+
+                <select id="userRole">
+
+                    <option value="Staff">
+                        Staff
+                    </option>
+
+                    <option value="Owner">
+                        Owner
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="form-buttons">
+
+            <button
+                class="btn save-btn"
+                onclick="saveUser()"
+            >
+                + ADD USER
+            </button>
+
+
+            <button
+                class="btn cancel-btn"
+                id="cancelBtn"
+                onclick="cancelEdit()"
+            >
+                CANCEL
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- USERS LIST -->
+
+    <div class="table-card">
+
+        <div class="table-header">
+
+            <h3>CRM Users</h3>
+
+            <span
+                class="user-count"
+                id="userCount"
+            >
+                0 Users
+            </span>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>User Name</th>
+
+                        <th>Password</th>
+
+                        <th>Role</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="usersTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+
+<footer class="footer">
+
+    <strong>YALLA BATTERY</strong>
+
+    <p>
+        Wherever You Stop, We Start • Mobile Battery Replacement & Roadside Assistance
+    </p>
+
+    <p>
+        Dubai, UAE • 24/7 Battery Service
+    </p>
+
+</footer>
+
+
+
+<script>
+
+
+/* STORAGE KEY */
+
+const STORAGE_KEY = "yallaCRMUsers";
+
+
+/* EDIT INDEX */
+
+let editIndex = -1;
+
+
+
+/* LOAD USERS */
+
+let users =
+    JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+
+
+
+/* DEFAULT OWNER */
+
+if(users.length === 0){
+
+    users.push({
+
+        name:"Owner",
+
+        password:"1234",
+
+        role:"Owner"
+
+    });
+
+    saveToStorage();
+
+}
+
+
+
+/* SAVE STORAGE */
+
+function saveToStorage(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(users)
+    );
+
+}
+
+
+
+/* DISPLAY USERS */
+
+function displayUsers(){
+
+    const table =
+        document.getElementById("usersTable");
+
+    table.innerHTML = "";
+
+
+    document.getElementById("userCount").textContent =
+        users.length + (users.length === 1 ? " User" : " Users");
+
+
+    if(users.length === 0){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td colspan="5">
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            👥
+                        </div>
+
+                        No users found.
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    users.forEach(function(user,index){
+
+        const row =
+            document.createElement("tr");
+
+
+        const roleClass =
+            user.role === "Owner"
+            ? "owner"
+            : "staff";
+
+
+        row.innerHTML = `
+
+            <td>
+                ${index + 1}
+            </td>
+
+            <td>
+                <strong>${escapeHTML(user.name)}</strong>
+            </td>
+
+            <td>
+                ••••••••
+            </td>
+
+            <td>
+
+                <span class="role ${roleClass}">
+                    ${escapeHTML(user.role)}
+                </span>
+
+            </td>
+
+            <td>
+
+                <button
+                    class="edit-btn"
+                    onclick="editUser(${index})"
+                >
+                    Edit
+                </button>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteUser(${index})"
+                >
+                    Delete
+                </button>
+
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+}
+
+
+
+/* ADD / UPDATE USER */
+
+function saveUser(){
+
+    const name =
+        document.getElementById("userName").value.trim();
+
+    const password =
+        document.getElementById("userPassword").value.trim();
+
+    const role =
+        document.getElementById("userRole").value;
+
+
+    if(name === ""){
+
+        alert("Please enter user name.");
+
+        return;
+
+    }
+
+
+    if(password === ""){
+
+        alert("Please enter password.");
+
+        return;
+
+    }
+
+
+    /* EDIT */
+
+    if(editIndex !== -1){
+
+        users[editIndex] = {
+
+            name:name,
+
+            password:password,
+
+            role:role
+
+        };
+
+
+        saveToStorage();
+
+        alert("User updated successfully.");
+
+        cancelEdit();
+
+        displayUsers();
+
+        return;
+
+    }
+
+
+
+    /* CHECK DUPLICATE */
+
+    const exists =
+        users.some(function(user){
+
+            return user.name.toLowerCase() ===
+                   name.toLowerCase();
+
+        });
+
+
+    if(exists){
+
+        alert("This user name already exists.");
+
+        return;
+
+    }
+
+
+
+    /* ADD */
+
+    users.push({
+
+        name:name,
+
+        password:password,
+
+        role:role
+
+    });
+
+
+    saveToStorage();
+
+
+    alert("User added successfully.");
+
+
+    clearForm();
+
+    displayUsers();
+
+}
+
+
+
+/* EDIT USER */
+
+function editUser(index){
+
+    const user = users[index];
+
+
+    document.getElementById("userName").value =
+        user.name;
+
+
+    document.getElementById("userPassword").value =
+        user.password;
+
+
+    document.getElementById("userRole").value =
+        user.role;
+
+
+    editIndex = index;
+
+
+    document.getElementById("formTitle").textContent =
+        "✏️ Edit User";
+
+
+    document.querySelector(".save-btn").textContent =
+        "SAVE CHANGES";
+
+
+    document.getElementById("cancelBtn").style.display =
+        "inline-block";
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+
+/* CANCEL EDIT */
+
+function cancelEdit(){
+
+    editIndex = -1;
+
+
+    clearForm();
+
+
+    document.getElementById("formTitle").textContent =
+        "➕ Add New User";
+
+
+    document.querySelector(".save-btn").textContent =
+        "+ ADD USER";
+
+
+    document.getElementById("cancelBtn").style.display =
+        "none";
+
+}
+
+
+
+/* CLEAR FORM */
+
+function clearForm(){
+
+    document.getElementById("userName").value = "";
+
+    document.getElementById("userPassword").value = "";
+
+    document.getElementById("userRole").value = "Staff";
+
+}
+
+
+
+/* DELETE USER */
+
+function deleteUser(index){
+
+    const user = users[index];
+
+
+    if(user.role === "Owner" && users.length === 1){
+
+        alert(
+            "The main Owner account cannot be deleted."
+        );
+
+        return;
+
+    }
+
+
+    const confirmDelete =
+        confirm(
+            'Delete user "' + user.name + '"?'
+        );
+
+
+    if(!confirmDelete){
+
+        return;
+
+    }
+
+
+    users.splice(index,1);
+
+
+    saveToStorage();
+
+
+    displayUsers();
+
+}
+
+
+
+/* BACK TO DASHBOARD */
+
+function goBack(){
+
+    window.location.href = "index.html";
+
+}
+
+
+
+/* SECURITY */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replace(/&/g,"&amp;")
+
+        .replace(/</g,"&lt;")
+
+        .replace(/>/g,"&gt;")
+
+        .replace(/"/g,"&quot;")
+
+        .replace(/'/g,"&#039;");
+
+}
+
+
+
+/* INITIAL DISPLAY */
+
+displayUsers();
+
+
+</script>
+
+
+</body>
+</html>
