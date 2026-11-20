@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Battery Stock | Yalla Battery</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef1f4;
+    color:#123b40;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    background:#005f64;
+    color:white;
+    padding:18px 25px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:50px;
+    height:50px;
+    background:white;
+    color:#00777a;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:23px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#f9c400;
+}
+
+.brand h1{
+    margin:0;
+    font-size:22px;
+}
+
+.brand p{
+    margin:3px 0 0;
+    font-size:11px;
+    color:#f9c400;
+    font-weight:bold;
+}
+
+.back-btn{
+    background:#f9c400;
+    color:#123b40;
+    border:0;
+    padding:10px 15px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container{
+    max-width:1150px;
+    margin:auto;
+    padding:25px 18px 40px;
+}
+
+.page-title{
+    margin-bottom:20px;
+}
+
+.page-title h2{
+    margin:0 0 5px;
+    color:#005f64;
+}
+
+.page-title p{
+    margin:0;
+    color:#6b7b7e;
+    font-size:13px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:22px;
+    box-shadow:0 4px 14px rgba(0,0,0,.07);
+    border:1px solid #e0e7e9;
+}
+
+.card h3{
+    margin:0 0 18px;
+    color:#005f64;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.field label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.field input{
+    width:100%;
+    padding:12px;
+    border:1px solid #d5dfe1;
+    border-radius:8px;
+    font-size:14px;
+    outline:none;
+    background:white;
+}
+
+.field input:focus{
+    border-color:#005f64;
+    box-shadow:0 0 0 2px rgba(0,95,100,.08);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.form-buttons{
+    margin-top:20px;
+}
+
+.save-btn{
+    background:#f9c400;
+    color:#123b40;
+    border:0;
+    padding:12px 22px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.cancel-btn{
+    background:#e8edef;
+    color:#123b40;
+    border:0;
+    padding:12px 22px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-left:8px;
+    display:none;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box{
+    margin-bottom:18px;
+}
+
+.search-box input{
+    width:100%;
+    padding:13px;
+    border:1px solid #d5dfe1;
+    border-radius:8px;
+    font-size:14px;
+    outline:none;
+}
+
+.search-box input:focus{
+    border-color:#005f64;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:750px;
+}
+
+th{
+    background:#005f64;
+    color:white;
+    padding:13px;
+    text-align:left;
+    font-size:13px;
+}
+
+td{
+    padding:13px;
+    border-bottom:1px solid #e4eaeb;
+    font-size:14px;
+}
+
+tr:hover{
+    background:#f7fafb;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.action-btn{
+    border:0;
+    padding:7px 11px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-right:5px;
+}
+
+.edit-btn{
+    background:#005f64;
+    color:white;
+}
+
+.delete-btn{
+    background:#d9534f;
+    color:white;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    text-align:center;
+    padding:30px 10px;
+    color:#7b898c;
+    display:none;
+}
+
+/* =========================
+   STOCK SUMMARY
+========================= */
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.summary-box{
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    border-top:4px solid #00777a;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.summary-box .number{
+    font-size:25px;
+    font-weight:bold;
+    color:#005f64;
+}
+
+.summary-box p{
+    margin:5px 0 0;
+    color:#718083;
+    font-size:13px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    background:#004f54;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.footer strong{
+    color:#f9c400;
+}
+
+.footer p{
+    margin:6px 0 0;
+    color:#d5e5e6;
+    font-size:12px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+    .form-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:550px){
+
+    .header{
+        padding:14px;
+    }
+
+    .brand h1{
+        font-size:18px;
+    }
+
+    .brand p{
+        font-size:9px;
+    }
+
+    .logo{
+        width:43px;
+        height:43px;
+        font-size:19px;
+    }
+
+    .back-btn{
+        padding:8px 10px;
+        font-size:11px;
+    }
+
+    .container{
+        padding:18px 12px 30px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .summary-box{
+        padding:14px;
+    }
+
+    .summary-box .number{
+        font-size:20px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            Y<span>⚡</span>B
+        </div>
+
+        <div>
+
+            <h1>YALLA BATTERY</h1>
+
+            <p>
+                WHEREVER YOU STOP, WE START
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="back-btn"
+        onclick="goBack()"
+    >
+        ← Dashboard
+    </button>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+
+    <div class="page-title">
+
+        <h2>
+            🔋 Battery Stock
+        </h2>
+
+        <p>
+            Manage your battery brands, models, sizes,
+            quantities and cost prices.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         SUMMARY
+    ========================= -->
+
+    <div class="summary">
+
+        <div class="summary-box">
+
+            <div
+                class="number"
+                id="totalModels"
+            >
+                0
+            </div>
+
+            <p>
+                Total Battery Models
+            </p>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <div
+                class="number"
+                id="totalQuantity"
+            >
+                0
+            </div>
+
+            <p>
+                Total Units in Stock
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ADD BATTERY
+    ========================= -->
+
+    <div class="card">
+
+        <h3 id="formTitle">
+            Add Battery
+        </h3>
+
+
+        <div class="form-grid">
+
+
+            <!-- BRAND -->
+
+            <div class="field">
+
+                <label>
+                    Battery Brand
+                </label>
+
+                <input
+                    type="text"
+                    id="brand"
+                    placeholder="e.g. Varta"
+                >
+
+            </div>
+
+
+            <!-- MODEL -->
+
+            <div class="field">
+
+                <label>
+                    Battery Model
+                </label>
+
+                <input
+                    type="text"
+                    id="model"
+                    placeholder="e.g. E11"
+                >
+
+            </div>
+
+
+            <!-- SIZE -->
+
+            <div class="field">
+
+                <label>
+                    Battery Size
+                </label>
+
+                <input
+                    type="text"
+                    id="size"
+                    placeholder="e.g. 70Ah"
+                >
+
+            </div>
+
+
+            <!-- QUANTITY -->
+
+            <div class="field">
+
+                <label>
+                    Quantity
+                </label>
+
+                <input
+                    type="number"
+                    id="quantity"
+                    min="0"
+                    step="1"
+                    placeholder="e.g. 10"
+                >
+
+            </div>
+
+
+            <!-- COST PRICE -->
+
+            <div class="field">
+
+                <label>
+                    Cost Price (AED)
+                </label>
+
+                <input
+                    type="number"
+                    id="costPrice"
+                    min="0"
+                    step="0.01"
+                    placeholder="e.g. 250"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-buttons">
+
+            <button
+                class="save-btn"
+                id="saveButton"
+                onclick="saveBattery()"
+            >
+                + Add Battery
+            </button>
+
+
+            <button
+                class="cancel-btn"
+                id="cancelButton"
+                onclick="cancelEdit()"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         STOCK LIST
+    ========================= -->
+
+    <div class="card">
+
+        <h3>
+            Battery Stock List
+        </h3>
+
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search brand, model or size..."
+                oninput="displayBatteries()"
+            >
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Brand
+                        </th>
+
+                        <th>
+                            Model
+                        </th>
+
+                        <th>
+                            Size
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Cost Price
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="batteryTable"
+                ></tbody>
+
+            </table>
+
+        </div>
+
+
+        <div
+            class="empty"
+            id="emptyMessage"
+        >
+            No batteries added yet.
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <strong>
+        YALLA BATTERY
+    </strong>
+
+    <p>
+        Wherever You Stop, We Start
+    </p>
+
+    <p>
+        Dubai, UAE • 24/7 Battery Service
+    </p>
+
+</footer>
+
+
+<script>
+
+/* ==========================================
+   STORAGE
+========================================== */
+
+let batteries =
+    JSON.parse(
+        localStorage.getItem("yallaBatteryStock") || "[]"
+    );
+
+
+let editIndex = -1;
+
+
+/* ==========================================
+   SAVE BATTERY
+========================================== */
+
+function saveBattery(){
+
+    const brand =
+        document.getElementById("brand").value.trim();
+
+    const model =
+        document.getElementById("model").value.trim();
+
+    const size =
+        document.getElementById("size").value.trim();
+
+    const quantity =
+        document.getElementById("quantity").value.trim();
+
+    const costPrice =
+        document.getElementById("costPrice").value.trim();
+
+
+    /* VALIDATION */
+
+    if(
+        !brand ||
+        !model ||
+        !size ||
+        quantity === "" ||
+        costPrice === ""
+    ){
+
+        alert(
+            "Please fill all battery details."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        Number(quantity) < 0 ||
+        Number(costPrice) < 0
+    ){
+
+        alert(
+            "Quantity and Cost Price cannot be negative."
+        );
+
+        return;
+
+    }
+
+
+    const battery = {
+
+        brand:brand,
+
+        model:model,
+
+        size:size,
+
+        quantity:Number(quantity),
+
+        costPrice:Number(costPrice)
+
+    };
+
+
+    /* UPDATE */
+
+    if(editIndex !== -1){
+
+        batteries[editIndex] = battery;
+
+        editIndex = -1;
+
+        document.getElementById("formTitle").textContent =
+            "Add Battery";
+
+        document.getElementById("saveButton").textContent =
+            "+ Add Battery";
+
+        document.getElementById("cancelButton").style.display =
+            "none";
+
+    }
+
+    /* ADD */
+
+    else{
+
+        batteries.push(battery);
+
+    }
+
+
+    localStorage.setItem(
+        "yallaBatteryStock",
+        JSON.stringify(batteries)
+    );
+
+
+    clearForm();
+
+    displayBatteries();
+
+}
+
+
+/* ==========================================
+   DISPLAY BATTERIES
+========================================== */
+
+function displayBatteries(){
+
+    const table =
+        document.getElementById("batteryTable");
+
+    const empty =
+        document.getElementById("emptyMessage");
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    table.innerHTML = "";
+
+
+    let visibleBatteries =
+        batteries.filter(function(battery){
+
+            return (
+
+                battery.brand.toLowerCase().includes(search) ||
+
+                battery.model.toLowerCase().includes(search) ||
+
+                battery.size.toLowerCase().includes(search)
+
+            );
+
+        });
+
+
+    if(visibleBatteries.length === 0){
+
+        empty.style.display = "block";
+
+    }else{
+
+        empty.style.display = "none";
+
+    }
+
+
+    visibleBatteries.forEach(function(battery){
+
+        const originalIndex =
+            batteries.indexOf(battery);
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+                ${originalIndex + 1}
+            </td>
+
+            <td>
+                ${escapeHTML(battery.brand)}
+            </td>
+
+            <td>
+                ${escapeHTML(battery.model)}
+            </td>
+
+            <td>
+                ${escapeHTML(battery.size)}
+            </td>
+
+            <td>
+                ${battery.quantity}
+            </td>
+
+            <td>
+                AED ${Number(battery.costPrice).toFixed(2)}
+            </td>
+
+            <td>
+
+                <button
+                    class="action-btn edit-btn"
+                    onclick="editBattery(${originalIndex})"
+                >
+                    Edit
+                </button>
+
+                <button
+                    class="action-btn delete-btn"
+                    onclick="deleteBattery(${originalIndex})"
+                >
+                    Delete
+                </button>
+
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+
+    updateSummary();
+
+}
+
+
+/* ==========================================
+   EDIT BATTERY
+========================================== */
+
+function editBattery(index){
+
+    const battery =
+        batteries[index];
+
+
+    document.getElementById("brand").value =
+        battery.brand;
+
+    document.getElementById("model").value =
+        battery.model;
+
+    document.getElementById("size").value =
+        battery.size;
+
+    document.getElementById("quantity").value =
+        battery.quantity;
+
+    document.getElementById("costPrice").value =
+        battery.costPrice;
+
+
+    editIndex = index;
+
+
+    document.getElementById("formTitle").textContent =
+        "Edit Battery";
+
+    document.getElementById("saveButton").textContent =
+        "Update Battery";
+
+    document.getElementById("cancelButton").style.display =
+        "inline-block";
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* ==========================================
+   DELETE BATTERY
+========================================== */
+
+function deleteBattery(index){
+
+    const battery =
+        batteries[index];
+
+
+    const confirmDelete =
+        confirm(
+            "Delete " +
+            battery.brand +
+            " " +
+            battery.model +
+            "?"
+        );
+
+
+    if(!confirmDelete){
+
+        return;
+
+    }
+
+
+    batteries.splice(index,1);
+
+
+    localStorage.setItem(
+        "yallaBatteryStock",
+        JSON.stringify(batteries)
+    );
+
+
+    displayBatteries();
+
+}
+
+
+/* ==========================================
+   CANCEL EDIT
+========================================== */
+
+function cancelEdit(){
+
+    editIndex = -1;
+
+
+    clearForm();
+
+
+    document.getElementById("formTitle").textContent =
+        "Add Battery";
+
+    document.getElementById("saveButton").textContent =
+        "+ Add Battery";
+
+    document.getElementById("cancelButton").style.display =
+        "none";
+
+}
+
+
+/* ==========================================
+   CLEAR FORM
+========================================== */
+
+function clearForm(){
+
+    document.getElementById("brand").value = "";
+
+    document.getElementById("model").value = "";
+
+    document.getElementById("size").value = "";
+
+    document.getElementById("quantity").value = "";
+
+    document.getElementById("costPrice").value = "";
+
+}
+
+
+/* ==========================================
+   SUMMARY
+========================================== */
+
+function updateSummary(){
+
+    const totalModels =
+        batteries.length;
+
+
+    let totalQuantity = 0;
+
+
+    batteries.forEach(function(battery){
+
+        totalQuantity +=
+            Number(battery.quantity) || 0;
+
+    });
+
+
+    document.getElementById("totalModels").textContent =
+        totalModels;
+
+
+    document.getElementById("totalQuantity").textContent =
+        totalQuantity;
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replace(/&/g,"&amp;")
+
+        .replace(/</g,"&lt;")
+
+        .replace(/>/g,"&gt;")
+
+        .replace(/"/g,"&quot;")
+
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ==========================================
+   BACK TO DASHBOARD
+========================================== */
+
+function goBack(){
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* ==========================================
+   LOAD DATA
+========================================== */
+
+displayBatteries();
+
+</script>
+
+</body>
+</html>
